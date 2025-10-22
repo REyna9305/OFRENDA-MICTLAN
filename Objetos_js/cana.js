@@ -1,6 +1,6 @@
     import * as THREE from "../js/three.module.js";
 
-    export default function Caña1({x,y,z}){
+    export default function Cana1({x,y,z}){
 
     //PALITO DE CAÑA
     var cana = new THREE.Mesh(
@@ -14,9 +14,10 @@
 
     //CañaGrup
     var CanaGrup = new THREE.Group();
-    CanaGrup.add(caña);
+    CanaGrup.add(cana);
 
     CanaGrup.position.set(x,y,z);
     return CanaGrup;
 
     }
+
