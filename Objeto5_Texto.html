@@ -1,0 +1,167 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>texto</title>
+</head>
+<body>
+    
+<canvas id="myCanvas">
+    <!--El elemento HTML canvas se puede utilizar para dibujar gráficos a través de 
+        secuencias de comandos (por lo general JavaScript ).-->
+</canvas>
+
+<!-- Aquí va todo el código de three.js -->
+<!-- script type="importmap" importa las librerías necesarias para three.js-->
+
+<script src="./font/01.js"></script>
+
+<script type="importmap"> 
+    {
+        "imports":{
+            "three": "./js/three.module.js",
+            "three/OrbitControls": "./js/OrbitControls.js" 
+        }
+}
+</script>
+<script type="module">
+
+//🗃️🗃️ Mandar llamar a la librería
+
+//---------------------------------------------------------------------Manda a llamar librerias - Scrips
+    import * as THREE from 'three'; 
+    import {OrbitControls} from 'three/OrbitControls';
+    import {RoundedBoxGeometry} from "./js/RoundedBoxGeometry.js"
+    console.log(OrbitControls);
+
+    import {TextGeometry} from "./js/TextGeometry.js";
+    import {FontLoader} from "./js/FontLoader.js";
+//---------------------------------------------------------------------Manda a llamar librerias - Scrips
+
+//🕹️🕹️ Renderer - Realiza una conexión entre el código y el canvas
+    var renderer = new THREE.WebGLRenderer({
+    canvas: document.getElementById('myCanvas'), antialias: true,
+    });
+    renderer.setPixelRatio(window.decivePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x8FDBFF);
+
+
+// 🎬 Creando nueva escena - Es el espacio donde se colocan los objetos
+    var scene = new THREE.Scene();
+
+//🎥🎥 Agregar una cámara de perspectiva
+    var camera = new THREE.PerspectiveCamera(70,window.innerWidth / window.innerHeight,0.1,2000
+      );
+    scene.add(camera);
+
+    //Settings de la cámara
+    camera.position.set(0, 4, 10);
+
+    // Añadiendo los OrbitControls
+    var controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+
+// Espacio para colocar los objetos
+
+                //Cuadricula
+    var figura1 = new THREE.GridHelper (50,50,50);
+    //scene.add (figura1);
+
+                //Circulo Polar
+    var figura2 = new THREE.PolarGridHelper(20,16,20,64);
+    //scene.add (figura2);
+
+                //Lineas Ejes
+    var figura3 = new THREE.AxesHelper(500);
+    //scene.add (figura3);
+
+//Luces
+
+    //----------------------------------------------------------------Luces-Especificas
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
+
+    var LuzT= new THREE.DirectionalLight(0xffffff,2);
+    LuzT.position.set(0,5,25);
+    LuzT.target.position.set(0,0,0);
+    LuzT.castShadow = true;
+    LuzT.shadow.bias = 0.01;
+    LuzT.shadow.mapSize.width = 512*3;
+    LuzT.shadow.mapSize.height = 512*3;
+
+    LuzT.shadow.camera.top=50;
+    LuzT.shadow.camera.right=30;
+    LuzT.shadow.camera.left=-30;
+    LuzT.shadow.camera.bottom=-10;
+    LuzT.shadow.camera.visible=true;
+
+    var LuzT_DH = new THREE.CameraHelper(LuzT.shadow.camera);
+    scene.add(LuzT);
+    scene.add(LuzT_DH);
+    //----------------------------------------------------------------Luces-Especificas
+
+//Objetos 3D
+
+//----------------------------------------------------------------Geometria-Box-Base
+    var geometriaB = new THREE.BoxGeometry(100,0.5,180);
+    var materialB = new THREE.MeshLambertMaterial(
+        {
+            color:0x566658, side: THREE.DoubleSide
+        }
+    );
+    var meshB = new THREE.Mesh(geometriaB,materialB);
+    scene.add(meshB);
+    meshB.position.set(0,-0.5,-50);
+    meshB.receiveShadow = true;
+
+    //----------------------------------------------------------------Geometria-Box-Base
+
+    //----------------------------------------------------------------Letra1
+    var loader = new FontLoader();
+    var font = loader.parse(fontJSON);
+    var geometriaT1 = new TextGeometry ('Ofrenda del Mictlan', {
+
+        font: font, 
+        size: 5, 
+        height: 2,
+    });
+    geometriaT1.center();
+     var materialT1 = new THREE.MeshLambertMaterial({
+
+        color: 0xC7961E, 
+        emissive: 0xA37A18, 
+        shading:THREE.FlatShading,
+     });
+
+    var meshTexto1 = new THREE.Mesh(geometriaT1,materialT1);
+    //scene.add(meshTexto1);
+    meshTexto1.castShadow = true;
+    //----------------------------------------------------------------Letra1
+
+    var TextoGrup = new THREE.Group();
+    TextoGrup.add(meshTexto1);
+    scene.add(TextoGrup);
+    TextoGrup.position.set(0,7,0);
+    TextoGrup.castShadow = true;
+    TextoGrup.receiveShadow = true;
+
+
+//🎰🎰Rendering y animación
+    requestAnimationFrame(render);
+    function render() {
+
+    //🪄🪄 Animación - 
+
+    TextoGrup.rotation.x +=0.01;
+
+
+    //🎮🎮Actualización del OrbitControls para generar la suavidad de movimiento
+    controls.update();
+
+    //Llamado para renderizar y volver a llamar a la misma función (render)
+    renderer.render(scene, camera);
+    requestAnimationFrame(render);
+    }
+</script>
+</body>

@@ -1,0 +1,1763 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <title>Ofrenda Dia de Muertos</title>
+    <link rel="icon" type="image/png" href="Texturas_img/IconoDM.png"/>
+</head>
+<body>
+    
+<canvas id="myCanvas">
+    <!--El elemento HTML canvas se puede utilizar para dibujar gráficos a través de 
+        secuencias de comandos (por lo general JavaScript ).-->
+</canvas>
+
+<!-- Aquí va todo el código de three.js -->
+<!-- script type="importmap" importa las librerías necesarias para three.js-->
+
+<script src="./font/01.js"></script>
+
+<script type="importmap"> 
+    {
+        "imports":{
+            "three": "./js/three.module.js",
+            "three/OrbitControls": "./js/OrbitControls.js" 
+        }
+}
+
+</script>
+<script type="module"> 
+//🗃️🗃️ Mandar llamar a la librería
+    import * as THREE from 'three'; 
+    import {OrbitControls} from 'three/OrbitControls';
+    console.log(OrbitControls);
+
+    import CopalGrup from"./Objetos_js/Objeto1_JS_Copalera.js"
+    import MarcoGrupMarcos from"./Objetos_js/Objeto2_js_CuadrosConImagen.js"
+    import MosaicoGrup from"./Objetos_js/Objeto3_js_Mosaicos.js"
+    import TechoGrup from"./Objetos_js/Objeto4_js_Techo.js"
+    import TextoGrup from"./Objetos_js/Objeto5_js_Texto.js"
+
+    import FloresGrup from"./Objetos_js/FLORES DE CEPASUCHITL.js"
+    import TarroGrup from"./Objetos_js/TARRO.js"
+    import HuesoGrup from"./Objetos_js/ObjK_js_Huesos.js"
+    import PPGrup from"./Objetos_js/ObjK_js_Papelpicadokary.js"
+    import PPGrup2 from"./Objetos_js/ObjK_js_Papelpicadokary2.js"
+    import TamalGrup from"./Objetos_js/ObjK_js_tamales.js"
+    import ArbolesGrup from"./Objetos_js/ObjK_js_Arbol.js"
+
+    import AltarGrup from"./Objetos_js/base rectangular.js"
+    import CañaGrup from"./Objetos_js/caña.js"
+    import PaletaGrup from"./Objetos_js/paleta.js"
+    import PlatoGrup from"./Objetos_js/plato.js"
+    import CaballitoGrup from"./Objetos_js/ObjD_js_caballito.js"
+    import DulcesGrup from"./Objetos_js/ObjD_js_dulces.js"
+    import ManzanaGrup from"./Objetos_js/ObjD_js_manzana.js"
+    import PanGrup2 from"./Objetos_js/ObjD_js_pan.js"
+    import PeraGrup from"./Objetos_js/ObjD_js_pera.js"
+    import PilarGrup from"./Objetos_js/ObjD_js_pilar.js"
+
+    import BotellaGrup from"./Objetos_js/botella.js"
+    import CalaveritaGrup from"./Objetos_js/calaverita.js"
+    import CalaveraGrup from"./Objetos_js/ObjKar_js_calavera.js"
+    import MoleGrup from"./Objetos_js/ObjKar_js_mole.js"
+    import TapeteGrup from"./Objetos_js/ObjKar_js_tapete.js"
+    import VelaGrup from"./Objetos_js/ObjKar_js_vela.js"
+    
+    
+    
+
+//🕹️🕹️ Renderer - Realiza una conexión entre el código y el canvas
+    var renderer = new THREE.WebGLRenderer({
+    canvas: document.getElementById('myCanvas'), antialias: true,
+    });
+    renderer.setPixelRatio(window.decivePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x4787C4);
+
+
+// 🎬 Creando nueva escena - Es el espacio donde se colocan los objetos
+    var scene = new THREE.Scene();
+
+//🎥🎥 Agregar una cámara de perspectiva
+    var camera = new THREE.PerspectiveCamera(70,window.innerWidth / window.innerHeight,0.1,2000
+      );
+    scene.add(camera);
+
+    //Settings de la cámara
+    camera.position.set(0, 50, 600);
+
+    // Añadiendo los OrbitControls
+    var controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+
+// Espacio para colocar los objetos  
+    //Objetos 2D
+
+    var loader = new THREE.TextureLoader();
+    var bgTexture = loader.load('./Texturas_img/FondoCielo.png');
+    scene.background = bgTexture;
+
+    //-----------------------------------------------------------------------------------------------------Luces
+    //----------------------------------------------------------------LucesSphere
+    var luzEsferaFondo = new THREE.HemisphereLight(0xffffff,0xADDE59,0.4);
+    luzEsferaFondo.position.set(1,1,1);
+    scene.add(luzEsferaFondo);
+    //----------------------------------------------------------------LucesSphere
+
+    //----------------------------------------------------------------LucesPoint
+    //------------------------------------------------------LucePoint1
+    var luzVela1 = new THREE.PointLight(0xD6CC9A,1.5,50,1);
+    luzVela1.position.set(-0.5,115,-181);
+    scene.add(luzVela1);
+
+    var luzVela1Hel = new THREE.PointLightHelper(luzVela1);
+    //scene.add(luzVela1Hel);
+    //------------------------------------------------------LucePoint1
+
+    //------------------------------------------------------LucePoint2
+    var luzVela2 = new THREE.PointLight(0xD6CC9A,1.5,50,1);
+    luzVela2.position.set(6,105,-180);
+    scene.add(luzVela2);
+
+    var luzVela2Hel = new THREE.PointLightHelper(luzVela2);
+    //scene.add(luzVela2Hel);
+    //------------------------------------------------------LucePoint2
+
+    //------------------------------------------------------LucePoint3
+    var luzVela3 = new THREE.PointLight(0xD6CC9A,1.5,50,1);
+    luzVela3.position.set(-6.5,99,-179);
+    scene.add(luzVela3);
+
+    var luzVela3Hel = new THREE.PointLightHelper(luzVela3);
+    //scene.add(luzVela3Hel);
+    //------------------------------------------------------LucePoint3
+
+    //------------------------------------------------------LucePoint4
+    var luzVela4 = new THREE.PointLight(0xD6CC9A,1.5,50,1);
+    luzVela4.position.set(-30,80,-155.5);
+    scene.add(luzVela4);
+
+    var luzVela4Hel = new THREE.PointLightHelper(luzVela4);
+    //scene.add(luzVela4Hel);
+    //------------------------------------------------------LucePoint4
+
+    //------------------------------------------------------LucePoint5
+    var luzVela5 = new THREE.PointLight(0xD6CC9A,1.5,50,1);
+    luzVela5.position.set(30,80,-155.5);
+    scene.add(luzVela5);
+
+    var luzVela5Hel = new THREE.PointLightHelper(luzVela5);
+    //scene.add(luzVela5Hel);
+    //------------------------------------------------------LucePoint5
+
+    //------------------------------------------------------LucePoint6
+    var luzVela6 = new THREE.PointLight(0xD6CC9A,1.5,50,1);
+    luzVela6.position.set(-26,75,-153);
+    scene.add(luzVela6);
+
+    var luzVela6Hel = new THREE.PointLightHelper(luzVela6);
+    //scene.add(luzVela6Hel);
+    //------------------------------------------------------LucePoint6
+
+    //------------------------------------------------------LucePoint7
+    var luzVela7 = new THREE.PointLight(0xD6CC9A,1.5,50,1);
+    luzVela7.position.set(26,73,-153);
+    scene.add(luzVela7);
+
+    var luzVela7Hel = new THREE.PointLightHelper(luzVela7);
+    //scene.add(luzVela7Hel);
+    //------------------------------------------------------LucePoint7
+
+    //------------------------------------------------------LucePoint8
+    var luzVela8 = new THREE.PointLight(0xD6CC9A,1.5,50,1);
+    luzVela8.position.set(75,30,-113);
+    scene.add(luzVela8);
+
+    var luzVela8Hel = new THREE.PointLightHelper(luzVela8);
+    //scene.add(luzVela8Hel);
+    //------------------------------------------------------LucePoint8
+
+    //------------------------------------------------------LucePoint9
+    var luzVela9 = new THREE.PointLight(0xD6CC9A,1.5,50,1);
+    luzVela9.position.set(-58,30,-113);
+    scene.add(luzVela9);
+
+    var luzVela9Hel = new THREE.PointLightHelper(luzVela9);
+    //scene.add(luzVela9Hel);
+    //------------------------------------------------------LucePoint9
+
+    //------------------------------------------------------LucePoint10
+    var luzVela10 = new THREE.PointLight(0xD6CC9A,1.5,50,1);
+    luzVela10.position.set(70,37,-118);
+    scene.add(luzVela10);
+
+    var luzVela10Hel = new THREE.PointLightHelper(luzVela10);
+    //scene.add(luzVela10Hel);
+    //------------------------------------------------------LucePoint10
+
+    //------------------------------------------------------LucePoint11
+    var luzVela11 = new THREE.PointLight(0xD6CC9A,1.5,50,1);
+    luzVela11.position.set(-55,37,-118);
+    scene.add(luzVela11);
+
+    var luzVela11Hel = new THREE.PointLightHelper(luzVela11);
+    //scene.add(luzVela11Hel);
+    //------------------------------------------------------LucePoint11
+
+    //------------------------------------------------------LucePoint12
+    var luzVela12 = new THREE.PointLight(0xD6CC9A,1.5,50,1);
+    luzVela12.position.set(-125,25,40);
+    scene.add(luzVela12);
+
+    var luzVela12Hel = new THREE.PointLightHelper(luzVela12);
+    //scene.add(luzVela12Hel);
+    //------------------------------------------------------LucePoint12
+
+    //------------------------------------------------------LucePoint13
+    var luzVela13 = new THREE.PointLight(0xD6CC9A,1.5,50,1);
+    luzVela13.position.set(-125,20,13);
+    scene.add(luzVela13);
+
+    var luzVela13Hel = new THREE.PointLightHelper(luzVela13);
+    //scene.add(luzVela13Hel);
+    //------------------------------------------------------LucePoint13
+
+    //------------------------------------------------------LucePoint14
+    var luzVela14 = new THREE.PointLight(0xD6CC9A,1.5,50,1);
+    luzVela14.position.set(-125,20,66);
+    scene.add(luzVela14);
+
+    var luzVela14Hel = new THREE.PointLightHelper(luzVela14);
+    //scene.add(luzVela14Hel);
+    //------------------------------------------------------LucePoint14
+
+    //------------------------------------------------------LucePoint15
+    var luzVela15 = new THREE.PointLight(0xD6CC9A,1.5,50,1);
+    luzVela15.position.set(125,25,40);
+    scene.add(luzVela15);
+
+    var luzVela15Hel = new THREE.PointLightHelper(luzVela15);
+    //scene.add(luzVela15Hel);
+    //------------------------------------------------------LucePoint15
+
+    //------------------------------------------------------LucePoint16
+    var luzVela16 = new THREE.PointLight(0xD6CC9A,1.5,50,1);
+    luzVela16.position.set(125,20,13);
+    scene.add(luzVela16);
+
+    var luzVela16Hel = new THREE.PointLightHelper(luzVela16);
+    //scene.add(luzVela16Hel);
+    //------------------------------------------------------LucePoint16
+
+    //------------------------------------------------------LucePoint17
+    var luzVela17 = new THREE.PointLight(0xD6CC9A,1.5,50,1);
+    luzVela17.position.set(125,20,66);
+    scene.add(luzVela17);
+
+    var luzVela17Hel = new THREE.PointLightHelper(luzVela17);
+    //scene.add(luzVela17Hel);
+    //------------------------------------------------------LucePoint17
+
+    //------------------------------------------------------LucePoint18
+    var luzOjo1C1 = new THREE.PointLight(0x7FF07D,2,50,1);
+    luzOjo1C1.position.set(103,40,-117);
+    scene.add(luzOjo1C1);
+
+    var luzOjo1C1Hel = new THREE.PointLightHelper(luzOjo1C1);
+    //scene.add(luzOjo1C1Hel);
+    //------------------------------------------------------LucePoint18
+
+    //------------------------------------------------------LucePoint19
+    var luzOjo2C1 = new THREE.PointLight(0x7FF07D,1.5,50,1);
+    luzOjo2C1.position.set(123,40,-95);
+    scene.add(luzOjo2C1);
+
+    var luzOjo2C1Hel = new THREE.PointLightHelper(luzOjo2C1);
+    //scene.add(luzOjo2C1Hel);
+    //------------------------------------------------------LucePoint19
+
+    //------------------------------------------------------LucePoint20
+    var luzOjo1C2 = new THREE.PointLight(0x7FF07D,1.5,50,1);
+    luzOjo1C2.position.set(-100,40,-125);
+    scene.add(luzOjo1C2);
+
+    var luzOjo1C2Hel = new THREE.PointLightHelper(luzOjo1C2);
+    //scene.add(luzOjo1C2Hel);
+    //------------------------------------------------------LucePoint20
+
+    //------------------------------------------------------LucePoint21
+    var luzOjo2C2 = new THREE.PointLight(0x7FF07D,1.5,50,1);
+    luzOjo2C2.position.set(-120,40,-100);
+    scene.add(luzOjo2C2);
+
+    var luzOjo2C2Hel = new THREE.PointLightHelper(luzOjo2C2);
+    //scene.add(luzOjo2C2Hel);
+    //------------------------------------------------------LucePoint21
+    //----------------------------------------------------------------LucesPoint
+    //-----------------------------------------------------------------------------------------------------Luces
+
+    //-----------------------------------------------------------------------------------------------------BaseFlores
+    var geometriaBaseFlores = new THREE.BoxGeometry (500, 1.5, 500);
+        var textureFlores = new THREE.TextureLoader().load("./Texturas_img/FloresPiso.jpg");
+
+        textureFlores.wrapS = THREE.RepeatWrapping;
+        textureFlores.wrapT = THREE.RepeatWrapping;
+        textureFlores.repeat.set(12,12);
+
+        var materialBaseFlores = new THREE.MeshLambertMaterial({map:textureFlores});
+
+        var meshBaseFlores = new THREE.Mesh(geometriaBaseFlores,materialBaseFlores);
+        scene.add(meshBaseFlores);
+        meshBaseFlores.position.set(0,-2,-55);
+        meshBaseFlores.castShadow = true;
+        meshBaseFlores.receiveShadow = true;
+    //-----------------------------------------------------------------------------------------------------BaseFlores
+
+    //-----------------------------------------------------------------------------------------------------BaseTierra
+        var geometriaBaseTierra = new THREE.BoxGeometry (500, 10, 500);
+        var materialBaseTierra = new THREE.MeshLambertMaterial({ color: 0x40321B });
+
+        var meshBaseTierra = new THREE.Mesh(geometriaBaseTierra,materialBaseTierra);
+        scene.add(meshBaseTierra);
+        meshBaseTierra.position.set(0,-8,-55);
+        meshBaseTierra.castShadow = true;
+        meshBaseTierra.receiveShadow = true;
+    //-----------------------------------------------------------------------------------------------------BaseTierra
+
+    //-----------------------------------------------------------------------------------------------------BasePasto
+        var geometriaBasePasto = new THREE.BoxGeometry (5000, 10, 5000);
+        var texturePasto = new THREE.TextureLoader().load("./Texturas_img/Pasto2.jpg");
+
+        texturePasto.wrapS = THREE.RepeatWrapping;
+        texturePasto.wrapT = THREE.RepeatWrapping;
+        texturePasto.repeat.set(20,20);
+
+        var materialBasePasto = new THREE.MeshLambertMaterial({map:texturePasto});
+
+
+        var meshBasePasto = new THREE.Mesh(geometriaBasePasto,materialBasePasto);
+        scene.add(meshBasePasto);
+        meshBasePasto.position.set(0,-17,-55);
+        meshBasePasto.castShadow = true;
+        meshBasePasto.receiveShadow = true;
+    //-----------------------------------------------------------------------------------------------------BasePasto
+
+    //-----------------------------------------------------------------------------------------------------PisoTierra
+    var geometriaBasePiso = new THREE.BoxGeometry (250, 0.5, 395);
+    var texturePiso = new THREE. TextureLoader().load("./Texturas_img/Piso.jpeg");
+    var materialBasePiso = new THREE.MeshLambertMaterial({ map: texturePiso});
+    var meshBasePiso = new THREE.Mesh(geometriaBasePiso,materialBasePiso);
+    scene.add(meshBasePiso);
+    meshBasePiso.position.set(0,-0.5,-53);
+    meshBasePiso.castShadow = true;
+    meshBasePiso.receiveShadow = true;
+    //-----------------------------------------------------------------------------------------------------PisoTierra
+
+    //-----------------------------------------------------------------------------------------------------Pared1
+    var geometriaPared1 = new THREE.BoxGeometry (200, 200, 2);
+        var materialPared1 = new THREE.MeshLambertMaterial({ color: 0x5C4827 });
+
+        var meshPared1 = new THREE.Mesh(geometriaPared1,materialPared1);
+        scene.add(meshPared1);
+        meshPared1.position.set(0,100,-250.5);
+        meshPared1.castShadow = true;
+        meshPared1.receiveShadow = true;
+    //-----------------------------------------------------------------------------------------------------Pared1
+
+    //--------------------------------------------------------------------------------------------------------------------------------ImportarObjetos
+    //-----------------------------------------------------------------------------------------------------------------Objetos_Brenda
+    //-----------------------------------------------------------------------------------------------------Copal
+    var CopaleraEscenario = CopalGrup ({x:0,y:0,z:0});
+        //scene.add(CopaleraEscenario);
+
+    CopaleraEscenario.position.set(25,5,20);
+    CopaleraEscenario.scale.set(2,2,2);
+    //-----------------------------------------------------------------------------------------------------Copal
+
+    //-----------------------------------------------------------------------------------------------------Marco
+    var MarcoEscenario = MarcoGrupMarcos ({x:0,y:0,z:0});
+    scene.add(MarcoEscenario);
+
+    MarcoEscenario.position.set(0,64,-175);
+    MarcoEscenario.scale.set(1,1,1);
+    MarcoEscenario.receiveShadow = true;
+    MarcoEscenario.castShadow = true;
+    //-----------------------------------------------------------------------------------------------------Marco
+
+    //-----------------------------------------------------------------------------------------------------Mosaico
+    var MosaicoEscenario = MosaicoGrup ({x:0,y:0,z:0});
+    scene.add(MosaicoEscenario);
+
+    MosaicoEscenario.position.set(295,0,-219.5);
+    MosaicoEscenario.rotation.set(0,3.14,0);
+    MosaicoEscenario.scale.set(6,6.3,6);
+    //-----------------------------------------------------------------------------------------------------Mosaico
+
+    //-----------------------------------------------------------------------------------------------------Techo
+    var TechoEscenario = TechoGrup ({x:0,y:0,z:0});
+    scene.add(TechoEscenario);
+
+    TechoEscenario.position.set(0,60,-50);
+    TechoEscenario.scale.set(3.5,3,4.5);
+    //-----------------------------------------------------------------------------------------------------Techo
+
+    //-----------------------------------------------------------------------------------------------------Texto
+    var TextoEscenario = TextoGrup ({x:0,y:0,z:0});
+    scene.add(TextoEscenario);
+
+    TextoEscenario.position.set(0,270,70);
+    TextoEscenario.scale.set(5,5,5);
+    //-----------------------------------------------------------------------------------------------------Texto
+    //-----------------------------------------------------------------------------------------------------------------Objetos_Brenda
+
+    //-----------------------------------------------------------------------------------------------------------------Objetos_Karyme
+    //-----------------------------------------------------------------------------------------------------Flores
+    var FlorestEscenario = FloresGrup ({x:0,y:0,z:0});
+        //scene.add(FlorestEscenario);
+
+    FlorestEscenario.position.set(35,5,5);
+    FlorestEscenario.scale.set(1,1,1);
+    //-----------------------------------------------------------------------------------------------------Flores
+
+    //-----------------------------------------------------------------------------------------------------Tarro
+    var TarroEscenario = TarroGrup ({x:0,y:0,z:0});
+        //scene.add(TarroEscenario);
+
+    TarroEscenario.position.set(0,0,0);
+    TarroEscenario.scale.set(1.5,3.5,1.5);
+    //-----------------------------------------------------------------------------------------------------Tarro
+
+    //-----------------------------------------------------------------------------------------------------Huesos
+    var HuesosEscenario = HuesoGrup ({x:0,y:0,z:0});
+        //scene.add(HuesosEscenario);
+
+    HuesosEscenario.position.set(0,5,-60);
+    HuesosEscenario.scale.set(5,5,5);
+    //-----------------------------------------------------------------------------------------------------Huesos
+
+    //-----------------------------------------------------------------------------------------------------PapelPicado
+    var PapelPikEscenario = PPGrup ({x:0,y:0,z:0});
+        //scene.add(PapelPikEscenario);
+
+    PapelPikEscenario.position.set(0,5,20);
+    PapelPikEscenario.scale.set(1.5,1.5,1.5);
+    //-----------------------------------------------------------------------------------------------------PapelPicado
+    
+    //-----------------------------------------------------------------------------------------------------PapelPicado2
+    var PapelPikEscenario2 = PPGrup2 ({x:0,y:0,z:0});
+        //scene.add(PapelPikEscenario2);
+
+    PapelPikEscenario2.position.set(0,5,25);
+    PapelPikEscenario2.scale.set(1.5,1.5,1.5);
+    //-----------------------------------------------------------------------------------------------------PapelPicado2
+
+    //-----------------------------------------------------------------------------------------------------Tamal
+    var TamalEscenario = TamalGrup ({x:0,y:0,z:0});
+    //scene.add(TamalEscenario);
+
+    TamalEscenario.position.set(0,5,40);
+    TamalEscenario.scale.set(3,3,3);
+    //-----------------------------------------------------------------------------------------------------Tamal
+
+    //-----------------------------------------------------------------------------------------------------Arboles
+    var ArbolesEscenario = ArbolesGrup ({x:0,y:0,z:0});
+    scene.add(ArbolesEscenario);
+
+    ArbolesEscenario.position.set(0,5,0);
+    ArbolesEscenario.scale.set(0,0,0);
+    //-----------------------------------------------------------------------------------------------------Arboles
+
+    //-----------------------------------------------------------------------------------------------------------------Objetos_Karyme
+
+    //-----------------------------------------------------------------------------------------------------------------Objetos_Daniela
+    //-----------------------------------------------------------------------------------------------------Altar
+    var BaseRectEscenario = AltarGrup ({x:0,y:0,z:0});
+    scene.add(BaseRectEscenario);
+
+    BaseRectEscenario.position.set(0,0,-150);
+    BaseRectEscenario.scale.set(20,20,20);
+    //-----------------------------------------------------------------------------------------------------Altar
+
+    //-----------------------------------------------------------------------------------------------------Caña
+    var CañaEscenario = CañaGrup ({x:0,y:0,z:0});
+        //scene.add(CañaEscenario);
+
+    CañaEscenario.position.set(-10,5,0);
+    CañaEscenario.scale.set(4,3,4);
+    //-----------------------------------------------------------------------------------------------------Caña
+
+    //-----------------------------------------------------------------------------------------------------Paleta
+    var PaletaEscenario = PaletaGrup ({x:0,y:0,z:0});
+        //scene.add(PaletaEscenario);
+
+    PaletaEscenario.position.set(0,0,0);
+    PaletaEscenario.scale.set(2,2,2);
+    //-----------------------------------------------------------------------------------------------------Paleta
+
+    //-----------------------------------------------------------------------------------------------------Plato
+    var PlatoEscenario = PlatoGrup ({x:0,y:0,z:0});
+        //scene.add(PlatoEscenario);
+
+    PlatoEscenario.position.set(-40,10,10);
+    PlatoEscenario.scale.set(1.5,1.5,1.5);
+    //-----------------------------------------------------------------------------------------------------Plato
+
+    //-----------------------------------------------------------------------------------------------------Caballito
+    var CaballitoEscenario = CaballitoGrup ({x:0,y:0,z:0});
+        //scene.add(CaballitoEscenario);
+
+    CaballitoEscenario.position.set(0,0,0);
+    CaballitoEscenario.scale.set(1,1,1);
+    //-----------------------------------------------------------------------------------------------------Caballito
+
+    //-----------------------------------------------------------------------------------------------------Dulces
+    var DulcesEscenario = DulcesGrup ({x:0,y:0,z:0});
+        //scene.add(DulcesEscenario);
+
+    DulcesEscenario.position.set(0,2,10);
+    DulcesEscenario.scale.set(1,1,1);
+    //-----------------------------------------------------------------------------------------------------Dulces
+
+    //-----------------------------------------------------------------------------------------------------Manzana
+    var ManzanaEscenario = ManzanaGrup ({x:0,y:0,z:0});
+        //scene.add(ManzanaEscenario);
+
+    ManzanaEscenario.position.set(20,2,10);
+    ManzanaEscenario.scale.set(1,1,1);
+    //-----------------------------------------------------------------------------------------------------Manzana
+
+    //-----------------------------------------------------------------------------------------------------Pan
+    var PanEscenario = PanGrup2 ({x:0,y:0,z:0});
+        //scene.add(PanEscenario);
+
+    PanEscenario.position.set(60,2,10);
+    PanEscenario.scale.set(5,5,5);
+    //-----------------------------------------------------------------------------------------------------Pan
+
+    //-----------------------------------------------------------------------------------------------------Pera
+    var PeraEscenario = PeraGrup ({x:0,y:0,z:0});
+        //scene.add(PeraEscenario);
+
+    PeraEscenario.position.set(-60,2,10);
+    PeraEscenario.scale.set(1,1,1);
+    //-----------------------------------------------------------------------------------------------------Pera
+
+    //-----------------------------------------------------------------------------------------------------Pilar
+    var PilarEscenario = PilarGrup ({x:0,y:0,z:0});
+        //scene.add(PilarEscenario);
+
+    PilarEscenario.position.set(0,0,0);
+    PilarEscenario.scale.set(20,27,20);
+    //-----------------------------------------------------------------------------------------------------Pilar
+    //-----------------------------------------------------------------------------------------------------------------Objetos_Daniela
+
+    //-----------------------------------------------------------------------------------------------------------------Objetos_Karla
+    //-----------------------------------------------------------------------------------------------------Botella
+    var BotellaEscenario = BotellaGrup ({x:0,y:0,z:0});
+    //scene.add(BotellaEscenario);
+
+    BotellaEscenario.position.set(0,0,0);
+    BotellaEscenario.scale.set(0.75,0.75,0.75);
+    //-----------------------------------------------------------------------------------------------------Botella
+
+    //-----------------------------------------------------------------------------------------------------Calaverita
+    var CalaveritaEscenario = CalaveritaGrup ({x:0,y:0,z:0});
+        //scene.add(CalaveritaEscenario);
+
+    CalaveritaEscenario.position.set(10,5,0);
+    CalaveritaEscenario.scale.set(0.25,0.25,0.25);
+    //-----------------------------------------------------------------------------------------------------Calaverita
+
+    //-----------------------------------------------------------------------------------------------------Calavera
+    var CalaveraEscenario = CalaveraGrup ({x:0,y:0,z:0});
+        //scene.add(CalaveraEscenario);
+
+    CalaveraEscenario.position.set(-25,5,0);
+    CalaveraEscenario.scale.set(0.25,0.25,0.25);
+    //-----------------------------------------------------------------------------------------------------Calavera
+
+    //-----------------------------------------------------------------------------------------------------Mole
+    var MoleEscenario = MoleGrup ({x:0,y:0,z:0});
+        //scene.add(MoleEscenario);
+
+    MoleEscenario.position.set(-45,5,0);
+    MoleEscenario.scale.set(0.75,0.75,0.75);
+    //-----------------------------------------------------------------------------------------------------Mole
+
+    //-----------------------------------------------------------------------------------------------------Tapete
+    var TapeteEscenario = TapeteGrup ({x:0,y:0,z:0});
+    scene.add(TapeteEscenario);
+
+    TapeteEscenario.position.set(0,-13.1,0);
+    TapeteEscenario.scale.set(1,1,1);
+    //-----------------------------------------------------------------------------------------------------Tapete
+
+    //-----------------------------------------------------------------------------------------------------Vela
+    var VelaEscenario = VelaGrup ({x:0,y:0,z:0});
+        //scene.add(VelaEscenario);
+
+    VelaEscenario.position.set(0,20,0);
+    VelaEscenario.scale.set(0.5,0.5,0.5);
+    //-----------------------------------------------------------------------------------------------------Vela
+    //-----------------------------------------------------------------------------------------------------------------Objetos_Karla
+    //--------------------------------------------------------------------------------------------------------------------------------ImportarObjetos
+
+
+    //--------------------------------------------------------------------------------------------------------------------------------Clones
+    //-----------------------------------------------------------------------------------------------------------------------Copaleras
+    //-----------------------------------------------------------------------------------------------------Copalera1
+    var ClonCopalera1 = CopaleraEscenario.clone();
+    scene.add(ClonCopalera1);
+    ClonCopalera1.rotation.set(0,0,0);
+    ClonCopalera1.position.set(50,57.5,-180);
+    //-----------------------------------------------------------------------------------------------------Copalera1
+    //-----------------------------------------------------------------------------------------------------Copalera2
+    var ClonCopalera2 = CopaleraEscenario.clone();
+    scene.add(ClonCopalera2);
+    ClonCopalera2.rotation.set(0,0,0);
+    ClonCopalera2.position.set(-50,57.5,-180);
+    //-----------------------------------------------------------------------------------------------------Copalera2
+    //-----------------------------------------------------------------------------------------------------------------------Copaleras
+
+    //-----------------------------------------------------------------------------------------------------------------------Floreros
+    //-----------------------------------------------------------------------------------------------------Florero1
+    var ClonTarro1 = TarroEscenario.clone();
+    scene.add(ClonTarro1);
+    ClonTarro1.rotation.set(0,0,0);
+    ClonTarro1.position.set(70,38,-175);
+    //-----------------------------------------------------------------------------------------------------Florero1
+    //-----------------------------------------------------------------------------------------------------Florero2
+    var ClonTarro2 = TarroEscenario.clone();
+    scene.add(ClonTarro2);
+    ClonTarro2.rotation.set(0,0,0);
+    ClonTarro2.position.set(-70,38,-175);
+    //-----------------------------------------------------------------------------------------------------Florero2
+    //-----------------------------------------------------------------------------------------------------Florero3
+    var ClonTarro3 = TarroEscenario.clone();
+    scene.add(ClonTarro3);
+    ClonTarro3.rotation.set(0,0,0);
+    ClonTarro3.position.set(90,18,-190);
+    //-----------------------------------------------------------------------------------------------------Florero3
+    //-----------------------------------------------------------------------------------------------------Florero4
+    var ClonTarro4 = TarroEscenario.clone();
+    scene.add(ClonTarro4);
+    ClonTarro4.rotation.set(0,0,0);
+    ClonTarro4.position.set(-90,18,-190);
+    //-----------------------------------------------------------------------------------------------------Florero4
+    //-----------------------------------------------------------------------------------------------------------------------Floreros
+
+    //-----------------------------------------------------------------------------------------------------------------------Botellas
+    //-----------------------------------------------------------------------------------------------------Botella1
+    var ClonBotella1 = BotellaEscenario.clone();
+    scene.add(ClonBotella1);
+    ClonBotella1.rotation.set(0,0,0);
+    ClonBotella1.position.set(90,8.5,-140);
+    //-----------------------------------------------------------------------------------------------------Botella1
+    //-----------------------------------------------------------------------------------------------------Botella2
+    var ClonBotella2 = BotellaEscenario.clone();
+    scene.add(ClonBotella2);
+    ClonBotella2.rotation.set(0,0,0);
+    ClonBotella2.position.set(-90,8.5,-140);
+    //-----------------------------------------------------------------------------------------------------Botella2
+    //-----------------------------------------------------------------------------------------------------Botella3
+    var ClonBotella3 = BotellaEscenario.clone();
+    scene.add(ClonBotella3);
+    ClonBotella3.rotation.set(0,0,0);
+    ClonBotella3.position.set(70,28,-175);
+    //-----------------------------------------------------------------------------------------------------Botella3
+    //-----------------------------------------------------------------------------------------------------Botella4
+    var ClonBotella4 = BotellaEscenario.clone();
+    scene.add(ClonBotella4);
+    ClonBotella4.rotation.set(0,0,0);
+    ClonBotella4.position.set(-70,28,-175);
+    //-----------------------------------------------------------------------------------------------------Botella4
+    //-----------------------------------------------------------------------------------------------------------------------Botellas
+
+    //-----------------------------------------------------------------------------------------------------------------------Platos
+    //-----------------------------------------------------------------------------------------------------Plato1
+    var ClonPlato1 = PlatoEscenario.clone();
+    scene.add(ClonPlato1);
+    ClonPlato1.rotation.set(0,0,0);
+    ClonPlato1.position.set(50,40,-140);
+    //-----------------------------------------------------------------------------------------------------Plato1
+    //-----------------------------------------------------------------------------------------------------Plato2
+    var ClonPlato2 = PlatoEscenario.clone();
+    scene.add(ClonPlato2);
+    ClonPlato2.rotation.set(0,0,0);
+    ClonPlato2.position.set(-50,40,-140);
+    //-----------------------------------------------------------------------------------------------------Plato2
+    //-----------------------------------------------------------------------------------------------------------------------Platos
+
+    //-----------------------------------------------------------------------------------------------------------------------Mole
+    //-----------------------------------------------------------------------------------------------------Mole1
+    var ClonMole1 = MoleEscenario.clone();
+    scene.add(ClonMole1);
+    ClonMole1.rotation.set(0,0.5,0);
+    ClonMole1.position.set(50,52,-160);
+    ClonMole1.scale.set(0.6,0.6,0.6);
+    //-----------------------------------------------------------------------------------------------------Mole1
+    //-----------------------------------------------------------------------------------------------------Mole2
+    var ClonMole2 = MoleEscenario.clone();
+    scene.add(ClonMole2);
+    ClonMole2.rotation.set(0,-0.5,0);
+    ClonMole2.position.set(-50,52,-160);
+    ClonMole2.scale.set(0.6,0.6,0.6);
+    //-----------------------------------------------------------------------------------------------------Mole2
+    //-----------------------------------------------------------------------------------------------------------------------Mole
+
+    //-----------------------------------------------------------------------------------------------------------------------Tamales
+    //-----------------------------------------------------------------------------------------------------Mole1
+    var ClonTamales1 = TamalEscenario.clone();
+    scene.add(ClonTamales1);
+    ClonTamales1.rotation.set(0,0.8,0);
+    ClonTamales1.position.set(52,37,-142);
+    ClonTamales1.scale.set(2,2,2);
+    //-----------------------------------------------------------------------------------------------------Mole1
+    //-----------------------------------------------------------------------------------------------------Mole2
+    var ClonTamales2 = TamalEscenario.clone();
+    scene.add(ClonTamales2);
+    ClonTamales2.rotation.set(0,0,0);
+    ClonTamales2.position.set(-48,37,-140);
+    ClonTamales2.scale.set(2,2,2);
+    //-----------------------------------------------------------------------------------------------------Mole2
+    //-----------------------------------------------------------------------------------------------------------------------Tamales
+
+    //-----------------------------------------------------------------------------------------------------------------------Pilares
+    //-----------------------------------------------------------------------------------------------------Pilar1
+    var ClonPilar1 = PilarEscenario.clone();
+    scene.add(ClonPilar1);
+    ClonPilar1.position.set(126.9,-1,-220);
+    //-----------------------------------------------------------------------------------------------------Pilar1
+    //-----------------------------------------------------------------------------------------------------Pilar2
+    var ClonPilar2 = PilarEscenario.clone();
+    scene.add(ClonPilar2);
+    ClonPilar2.position.set(-125,-1,-220);
+    //-----------------------------------------------------------------------------------------------------Pilar2
+    //-----------------------------------------------------------------------------------------------------Pilar3
+    var ClonPilar3 = PilarEscenario.clone();
+    scene.add(ClonPilar3);
+    ClonPilar3.position.set(125,-1,-45);
+    //-----------------------------------------------------------------------------------------------------Pilar3
+    //-----------------------------------------------------------------------------------------------------Pilar4
+    var ClonPilar4 = PilarEscenario.clone();
+    scene.add(ClonPilar4);
+    ClonPilar4.position.set(-125,-1,-45);
+    //-----------------------------------------------------------------------------------------------------Pilar4
+    //-----------------------------------------------------------------------------------------------------Pilar5
+    var ClonPilar5 = PilarEscenario.clone();
+    scene.add(ClonPilar5);
+    ClonPilar5.position.set(125,-1,130);
+    //-----------------------------------------------------------------------------------------------------Pilar5
+    //-----------------------------------------------------------------------------------------------------Pilar6
+    var ClonPilar6 = PilarEscenario.clone();
+    scene.add(ClonPilar6);
+    ClonPilar6.position.set(-125,-1,130);
+    //-----------------------------------------------------------------------------------------------------Pilar6
+    //-----------------------------------------------------------------------------------------------------------------------Pilares
+
+    //-----------------------------------------------------------------------------------------------------------------------Calaveras
+    //-----------------------------------------------------------------------------------------------------Calavera1
+    var ClonCalavera1 = CalaveraEscenario.clone();
+    scene.add(ClonCalavera1);
+    ClonCalavera1.position.set(126.9,-30,-150);
+    ClonCalavera1.rotation.set(0,-0.8,0);
+    ClonCalavera1.scale.set(2,2,2);
+    //-----------------------------------------------------------------------------------------------------Calavera1
+
+    //-----------------------------------------------------------------------------------------------------Calavera2
+    var ClonCalavera2 = CalaveraEscenario.clone();
+    scene.add(ClonCalavera2);
+    ClonCalavera2.position.set(-162.9,-30,-120);
+    ClonCalavera2.rotation.set(0,0.8,0);
+    ClonCalavera2.scale.set(2,2,2);
+    //-----------------------------------------------------------------------------------------------------Calavera2
+    //-----------------------------------------------------------------------------------------------------------------------Calaveras
+
+    //-----------------------------------------------------------------------------------------------------------------------Huesos
+    //-----------------------------------------------------------------------------------------------------Hueso1
+    var ClonHueso1 = HuesosEscenario.clone();
+    scene.add(ClonHueso1);
+    ClonHueso1.position.set(200,-90,-100);
+    ClonHueso1.rotation.set(1.57,3.15,-2.57);
+    ClonHueso1.scale.set(12,15,12);
+    //-----------------------------------------------------------------------------------------------------Hueso1
+
+    //-----------------------------------------------------------------------------------------------------Hueso2
+    var ClonHueso2 = HuesosEscenario.clone();
+    scene.add(ClonHueso2);
+    ClonHueso2.position.set(-140,101,-200);
+    ClonHueso2.rotation.set(-1.57,3.15,-2.57);
+    ClonHueso2.scale.set(12,15,12);
+    //-----------------------------------------------------------------------------------------------------Hueso2
+
+    //-----------------------------------------------------------------------------------------------------Hueso3
+    var ClonHueso3 = HuesosEscenario.clone();
+    scene.add(ClonHueso3);
+    ClonHueso3.position.set(250,-90,-100);
+    ClonHueso3.rotation.set(1.57,3.15,-1);
+    ClonHueso3.scale.set(12,15,12);
+    //-----------------------------------------------------------------------------------------------------Hueso3
+
+    //-----------------------------------------------------------------------------------------------------Hueso4
+    var ClonHueso4 = HuesosEscenario.clone();
+    scene.add(ClonHueso4);
+    ClonHueso4.position.set(-240,-90,-100);
+    ClonHueso4.rotation.set(1.57,3.15,1);
+    ClonHueso4.scale.set(12,15,12);
+    //-----------------------------------------------------------------------------------------------------Hueso4
+
+    //-----------------------------------------------------------------------------------------------------Hueso5
+    var ClonHueso5 = HuesosEscenario.clone();
+    scene.add(ClonHueso5);
+    ClonHueso5.position.set(180,-90,-180);
+    ClonHueso5.rotation.set(1.57,3.15,2.6);
+    ClonHueso5.scale.set(12,15,12);
+    //-----------------------------------------------------------------------------------------------------Hueso5
+
+    //-----------------------------------------------------------------------------------------------------Hueso6
+    var ClonHueso6 = HuesosEscenario.clone();
+    scene.add(ClonHueso6);
+    ClonHueso6.position.set(-180,-90,-180);
+    ClonHueso6.rotation.set(1.57,3.15,-2.6);
+    ClonHueso6.scale.set(12,15,12);
+    //-----------------------------------------------------------------------------------------------------Hueso6
+    //-----------------------------------------------------------------------------------------------------------------------Huesos
+
+    //-----------------------------------------------------------------------------------------------------------------------PanMuerto
+    //-----------------------------------------------------------------------------------------------------PanM1
+    var ClonPanM1 = PanEscenario.clone();
+    scene.add(ClonPanM1);
+    ClonPanM1.position.set(66,37,-138);
+    ClonPanM1.rotation.set(0,-0.5,0);
+    //-----------------------------------------------------------------------------------------------------PanM1
+
+    //-----------------------------------------------------------------------------------------------------PanM2
+    var ClonPanM2 = PanEscenario.clone();
+    scene.add(ClonPanM2);
+    ClonPanM2.position.set(-66,37,-138);
+    ClonPanM2.rotation.set(0,0.5,0);
+    //-----------------------------------------------------------------------------------------------------PanM2
+    //-----------------------------------------------------------------------------------------------------------------------PanMuerto
+
+    //-----------------------------------------------------------------------------------------------------------------------Peras
+    //-----------------------------------------------------------------------------------------------------Pera1
+    var ClonPera1 = PeraEscenario.clone();
+    scene.add(ClonPera1);
+    ClonPera1.position.set(83,20,-123);
+    ClonPera1.rotation.set(0,0,0);
+    //-----------------------------------------------------------------------------------------------------Pera1
+
+    //-----------------------------------------------------------------------------------------------------Pera2
+    var ClonPera2 = PeraEscenario.clone();
+    scene.add(ClonPera2);
+    ClonPera2.position.set(-88,20,-128);
+    ClonPera2.rotation.set(0,-0.5,0);
+    //-----------------------------------------------------------------------------------------------------Pera2
+    //-----------------------------------------------------------------------------------------------------------------------Peras
+
+    //-----------------------------------------------------------------------------------------------------------------------Manzanas
+    //-----------------------------------------------------------------------------------------------------Manzana1
+    var ClonManzana1 = ManzanaEscenario.clone();
+    scene.add(ClonManzana1);
+    ClonManzana1.position.set(92,20,-132);
+    ClonManzana1.rotation.set(0,0,-0.3);
+    //-----------------------------------------------------------------------------------------------------Manzana1
+
+    //-----------------------------------------------------------------------------------------------------Manzana2
+    var ClonManzana2 = ManzanaEscenario.clone();
+    scene.add(ClonManzana2);
+    ClonManzana2.position.set(-67,20,-122);
+    ClonManzana2.rotation.set(0,0,0.3);
+    //-----------------------------------------------------------------------------------------------------Manzana2
+    //-----------------------------------------------------------------------------------------------------------------------Manzanas
+
+    //-----------------------------------------------------------------------------------------------------------------------Calaverita
+    //-----------------------------------------------------------------------------------------------------Calaverita1
+    var ClonCalaverita1 = CalaveritaEscenario.clone();
+    scene.add(ClonCalaverita1);
+    ClonCalaverita1.position.set(-6,33.5,-140.5);
+    ClonCalaverita1.rotation.set(0,0,0);
+    ClonCalaverita1.scale.set(0.45,0.45,0.45);
+    //-----------------------------------------------------------------------------------------------------Calaverita1
+
+    //-----------------------------------------------------------------------------------------------------Calaverita2
+    var ClonCalaverita2 = CalaveritaEscenario.clone();
+    scene.add(ClonCalaverita2);
+    ClonCalaverita2.position.set(10,34.5,-140.5);
+    ClonCalaverita2.rotation.set(0,0.5,0);
+    ClonCalaverita2.scale.set(0.35,0.35,0.35);
+    //-----------------------------------------------------------------------------------------------------Calaverita2
+
+    //-----------------------------------------------------------------------------------------------------Calaverita3
+    var ClonCalaverita3 = CalaveritaEscenario.clone();
+    scene.add(ClonCalaverita3);
+    ClonCalaverita3.position.set(-19,34.5,-144.5);
+    ClonCalaverita3.rotation.set(0,-0.5,0);
+    ClonCalaverita3.scale.set(0.35,0.35,0.35);
+    //-----------------------------------------------------------------------------------------------------Calaverita3
+    //-----------------------------------------------------------------------------------------------------------------------Calaverita
+
+    //-----------------------------------------------------------------------------------------------------------------------Caballitos
+    //-----------------------------------------------------------------------------------------------------Caballito1
+    var ClonCaballito1 = CaballitoEscenario.clone();
+    scene.add(ClonCaballito1);
+    ClonCaballito1.position.set(-38,60,-155);
+    ClonCaballito1.rotation.set(0,0,0);
+    ClonCaballito1.scale.set(0.65,0.65,0.65);
+    //-----------------------------------------------------------------------------------------------------Caballito1
+
+    //-----------------------------------------------------------------------------------------------------Caballito2
+    var ClonCaballito2 = CaballitoEscenario.clone();
+    scene.add(ClonCaballito2);
+    ClonCaballito2.position.set(38,60,-155);
+    ClonCaballito2.rotation.set(0,0,0);
+    ClonCaballito2.scale.set(0.65,0.65,0.65);
+    //-----------------------------------------------------------------------------------------------------Caballito2
+    //-----------------------------------------------------------------------------------------------------------------------Caballitos
+
+    //-----------------------------------------------------------------------------------------------------------------------Dulces
+    //-----------------------------------------------------------------------------------------------------Dulces1
+    var ClonDulces1 = DulcesEscenario.clone();
+    scene.add(ClonDulces1);
+    ClonDulces1.position.set(33,39,-140.5);
+    ClonDulces1.rotation.set(0,-0.3,0);
+    //-----------------------------------------------------------------------------------------------------Dulces1
+
+    //-----------------------------------------------------------------------------------------------------Dulces2
+    var ClonDulces2 = DulcesEscenario.clone();
+    scene.add(ClonDulces2);
+    ClonDulces2.position.set(-30,39,-140.5);
+    ClonDulces2.rotation.set(0,0.3,0);
+    //-----------------------------------------------------------------------------------------------------Dulces2
+    //-----------------------------------------------------------------------------------------------------------------------Dulces
+
+    //-----------------------------------------------------------------------------------------------------------------------Paleta
+    //-----------------------------------------------------------------------------------------------------Pleta1
+    var ClonPaleta1 = PaletaEscenario.clone();
+    scene.add(ClonPaleta1);
+    ClonPaleta1.position.set(35,40.5,-138.5);
+    ClonPaleta1.rotation.set(0,-0.3,1.57);
+    //-----------------------------------------------------------------------------------------------------Pleta1
+
+    //-----------------------------------------------------------------------------------------------------Pleta2
+    var ClonPaleta2 = PaletaEscenario.clone();
+    scene.add(ClonPaleta2);
+    ClonPaleta2.position.set(-35,40.5,-132.5);
+    ClonPaleta2.rotation.set(0,1.2,-1.57);
+    //-----------------------------------------------------------------------------------------------------Pleta2
+    //-----------------------------------------------------------------------------------------------------------------------Paleta
+
+    //-----------------------------------------------------------------------------------------------------------------------Caña
+    //-----------------------------------------------------------------------------------------------------Caña1
+    var ClonCaña1 = CañaEscenario.clone();
+    scene.add(ClonCaña1);
+    ClonCaña1.position.set(50,22.3,-122);
+    ClonCaña1.rotation.set(0,-0.3,1.57);
+    ClonCaña1.scale.set(5,2.5,5);
+    //-----------------------------------------------------------------------------------------------------Caña1
+
+    //-----------------------------------------------------------------------------------------------------Caña2
+    var ClonCaña2 = CañaEscenario.clone();
+    scene.add(ClonCaña2);
+    ClonCaña2.position.set(-35,22.3,-122);
+    ClonCaña2.rotation.set(0,0.3,1.57);
+    ClonCaña2.scale.set(5,2.5,5);
+    //-----------------------------------------------------------------------------------------------------Caña2
+
+    //-----------------------------------------------------------------------------------------------------Caña3
+    var ClonCaña3 = CañaEscenario.clone();
+    scene.add(ClonCaña3);
+    ClonCaña3.position.set(35,22.3,-115);
+    ClonCaña3.rotation.set(0,-1.3,1.57);
+    ClonCaña3.scale.set(5,2.5,5);
+    //-----------------------------------------------------------------------------------------------------Caña3
+
+    //-----------------------------------------------------------------------------------------------------Caña4
+    var ClonCaña4 = CañaEscenario.clone();
+    scene.add(ClonCaña4);
+    ClonCaña4.position.set(-35,22.3,-115);
+    ClonCaña4.rotation.set(0,-2.3,1.57);
+    ClonCaña4.scale.set(5,2.5,5);
+    //-----------------------------------------------------------------------------------------------------Caña4
+
+    //-----------------------------------------------------------------------------------------------------Caña5
+    var ClonCaña5 = CañaEscenario.clone();
+    scene.add(ClonCaña5);
+    ClonCaña5.position.set(34,28.3,-120);
+    ClonCaña5.rotation.set(1.3,2.5,1.57);
+    ClonCaña5.scale.set(5,2.5,5);
+    //-----------------------------------------------------------------------------------------------------Caña5
+
+    //-----------------------------------------------------------------------------------------------------Caña6
+    var ClonCaña6 = CañaEscenario.clone();
+    scene.add(ClonCaña6);
+    ClonCaña6.position.set(-32,28.3,-120);
+    ClonCaña6.rotation.set(1.3,2.5,1.57);
+    ClonCaña6.scale.set(5,2.5,5);
+    //-----------------------------------------------------------------------------------------------------Caña6
+    //-----------------------------------------------------------------------------------------------------------------------Caña
+    
+    //-----------------------------------------------------------------------------------------------------------------------Velas
+    //-------------------------------------------------------------------------------------------------------------VelasOfrenda
+    //-----------------------------------------------------------------------------------------------------Vela1
+    var ClonVela1 = VelaEscenario.clone();
+    scene.add(ClonVela1);
+    ClonVela1.position.set(0,56,-183);
+    ClonVela1.scale.set(0.5,2,0.5);
+    //-----------------------------------------------------------------------------------------------------Vela1
+
+    //-----------------------------------------------------------------------------------------------------Vela2
+    var ClonVela2 = VelaEscenario.clone();
+    scene.add(ClonVela2);
+    ClonVela2.position.set(6,56,-181);
+    ClonVela2.scale.set(0.5,1.7,0.5);
+    //-----------------------------------------------------------------------------------------------------Vela2
+
+    //-----------------------------------------------------------------------------------------------------Vela3
+    var ClonVela3 = VelaEscenario.clone();
+    scene.add(ClonVela3);
+    ClonVela3.position.set(-6,56,-181);
+    ClonVela3.scale.set(0.5,1.4,0.5);
+    //-----------------------------------------------------------------------------------------------------Vela3
+
+    //-----------------------------------------------------------------------------------------------------Vela4
+    var ClonVela4 = VelaEscenario.clone();
+    scene.add(ClonVela4);
+    ClonVela4.position.set(-30,55,-157);
+    ClonVela4.scale.set(0.4,0.8,0.4);
+    //-----------------------------------------------------------------------------------------------------Vela4
+
+    //-----------------------------------------------------------------------------------------------------Vela5
+    var ClonVela5 = VelaEscenario.clone();
+    scene.add(ClonVela5);
+    ClonVela5.position.set(30,55,-157);
+    ClonVela5.scale.set(0.4,0.8,0.4);
+    //-----------------------------------------------------------------------------------------------------Vela5
+
+    //-----------------------------------------------------------------------------------------------------Vela6
+    var ClonVela6 = VelaEscenario.clone();
+    scene.add(ClonVela6);
+    ClonVela6.position.set(-26,55,-154);
+    ClonVela6.scale.set(0.3,0.6,0.3);
+    //-----------------------------------------------------------------------------------------------------Vela6
+
+    //-----------------------------------------------------------------------------------------------------Vela7
+    var ClonVela7 = VelaEscenario.clone();
+    scene.add(ClonVela7);
+    ClonVela7.position.set(26,55,-154);
+    ClonVela7.scale.set(0.3,0.6,0.3);
+    //-----------------------------------------------------------------------------------------------------Vela7
+
+    //-----------------------------------------------------------------------------------------------------Vela8
+    var ClonVela8 = VelaEscenario.clone();
+    scene.add(ClonVela8);
+    ClonVela8.position.set(70,17,-120);
+    ClonVela8.scale.set(0.4,0.6,0.4);
+    //-----------------------------------------------------------------------------------------------------Vela8
+
+    //-----------------------------------------------------------------------------------------------------Vela9
+    var ClonVela9 = VelaEscenario.clone();
+    scene.add(ClonVela9);
+    ClonVela9.position.set(-55,17,-120);
+    ClonVela9.scale.set(0.4,0.6,0.4);
+    //-----------------------------------------------------------------------------------------------------Vela9
+
+    //-----------------------------------------------------------------------------------------------------Vela10
+    var ClonVela10 = VelaEscenario.clone();
+    scene.add(ClonVela10);
+    ClonVela10.position.set(75,17,-115);
+    ClonVela10.scale.set(0.4,0.4,0.4);
+    //-----------------------------------------------------------------------------------------------------Vela10
+
+    //-----------------------------------------------------------------------------------------------------Vela11
+    var ClonVela11 = VelaEscenario.clone();
+    scene.add(ClonVela11);
+    ClonVela11.position.set(-58,17,-115);
+    ClonVela11.scale.set(0.4,0.4,0.4);
+    //-----------------------------------------------------------------------------------------------------Vela11
+    //-------------------------------------------------------------------------------------------------------------VelasOfrenda
+
+    //-------------------------------------------------------------------------------------------------------------VelasPilres
+    //-----------------------------------------------------------------------------------------------------Vela12-Izq
+    var ClonVela12 = VelaEscenario.clone();
+    scene.add(ClonVela12);
+    ClonVela12.position.set(-125,-5,40);
+    ClonVela12.scale.set(0.5,0.8,0.5);
+    //-----------------------------------------------------------------------------------------------------Vela12-Izq
+
+    //-----------------------------------------------------------------------------------------------------Vela13-Izq
+    var ClonVela13 = VelaEscenario.clone();
+    scene.add(ClonVela13);
+    ClonVela13.position.set(-125,-4,13);
+    ClonVela13.scale.set(0.5,0.6,0.5);
+    //-----------------------------------------------------------------------------------------------------Vela13-Izq
+
+    //-----------------------------------------------------------------------------------------------------Vela14-Izq
+    var ClonVela14 = VelaEscenario.clone();
+    scene.add(ClonVela14);
+    ClonVela14.position.set(-125,-4,66);
+    ClonVela14.scale.set(0.5,0.6,0.5);
+    //-----------------------------------------------------------------------------------------------------Vela14-Izq
+
+    //-----------------------------------------------------------------------------------------------------Vela15-Der
+    var ClonVela15 = VelaEscenario.clone();
+    scene.add(ClonVela15);
+    ClonVela15.position.set(125,-5,40);
+    ClonVela15.scale.set(0.5,0.8,0.5);
+    //-----------------------------------------------------------------------------------------------------Vela15-Der
+
+    //-----------------------------------------------------------------------------------------------------Vela16-Der
+    var ClonVela16 = VelaEscenario.clone();
+    scene.add(ClonVela16);
+    ClonVela16.position.set(125,-4,13);
+    ClonVela16.scale.set(0.5,0.6,0.5);
+    //-----------------------------------------------------------------------------------------------------Vela16-Der
+
+    //-----------------------------------------------------------------------------------------------------Vela17-Der
+    var ClonVela17 = VelaEscenario.clone();
+    scene.add(ClonVela17);
+    ClonVela17.position.set(125,-4,66);
+    ClonVela17.scale.set(0.5,0.6,0.5);
+    //-----------------------------------------------------------------------------------------------------Vela17-Der
+    //-------------------------------------------------------------------------------------------------------------VelasPilres
+    //-----------------------------------------------------------------------------------------------------------------------Velas
+
+    //-----------------------------------------------------------------------------------------------------------------------PapelPicado1
+    //-------------------------------------------------------------------------------------------------------------PP_PisoInf1
+    //-----------------------------------------------------------------------------------------------------PP1_1
+    var ClonPapelP1 = PapelPikEscenario.clone();
+    scene.add(ClonPapelP1);
+    ClonPapelP1.position.set(-14.5,-2,-109);
+    ClonPapelP1.scale.set(3,2.5,2.5);
+    //-----------------------------------------------------------------------------------------------------PP1_1
+
+    //-----------------------------------------------------------------------------------------------------PP1_2
+    var ClonPapelP2 = PapelPikEscenario.clone();
+    scene.add(ClonPapelP2);
+    ClonPapelP2.position.set(-93.5,-2,-109);
+    ClonPapelP2.scale.set(3,2.5,2.5);
+    //-----------------------------------------------------------------------------------------------------PP1_2
+
+    //-----------------------------------------------------------------------------------------------------PP1_3
+    var ClonPapelP3 = PapelPikEscenario.clone();
+    scene.add(ClonPapelP3);
+    ClonPapelP3.position.set(63,-2,-109);
+    ClonPapelP3.scale.set(3,2.5,2.5);
+    //-----------------------------------------------------------------------------------------------------PP1_3
+    //-------------------------------------------------------------------------------------------------------------PP_PisoInf1
+
+    //-------------------------------------------------------------------------------------------------------------PP_PisoCentral2
+    //-----------------------------------------------------------------------------------------------------PP1_4
+    var ClonPapelP4 = PapelPikEscenario.clone();
+    scene.add(ClonPapelP4);
+    ClonPapelP4.position.set(19,18,-129);
+    ClonPapelP4.scale.set(2.5,2.5,2.5);
+    //-----------------------------------------------------------------------------------------------------PP1_4
+
+    //-----------------------------------------------------------------------------------------------------PP1_5
+    var ClonPapelP5 = PapelPikEscenario.clone();
+    scene.add(ClonPapelP5);
+    ClonPapelP5.position.set(-44,18,-129);
+    ClonPapelP5.scale.set(2.5,2.5,2.5);
+    //-----------------------------------------------------------------------------------------------------PP1_5
+    //-------------------------------------------------------------------------------------------------------------PP_PisoCentral2
+
+    //-------------------------------------------------------------------------------------------------------------PP_PisoSup3
+    //-----------------------------------------------------------------------------------------------------PP1_6
+    var ClonPapelP6 = PapelPikEscenario.clone();
+    scene.add(ClonPapelP6);
+    ClonPapelP6.position.set(-14.5,38,-149);
+    ClonPapelP6.scale.set(3,2.5,2.5);
+    //-----------------------------------------------------------------------------------------------------PP1_6
+    //-------------------------------------------------------------------------------------------------------------PP_PisoSup3
+    //-----------------------------------------------------------------------------------------------------------------------PapelPicado1
+
+    //-----------------------------------------------------------------------------------------------------------------------PapelPicado2
+    //-------------------------------------------------------------------------------------------------------------PP_PisoInf1
+    //-----------------------------------------------------------------------------------------------------PP2_1
+    var ClonPapel2P1 = PapelPikEscenario2.clone();
+    scene.add(ClonPapel2P1);
+    ClonPapel2P1.position.set(-53.8,-2,-109);
+    ClonPapel2P1.scale.set(3,2.5,2.5);
+    //-----------------------------------------------------------------------------------------------------PP2_1
+
+    //-----------------------------------------------------------------------------------------------------PP2_2
+    var ClonPapel2P2 = PapelPikEscenario2.clone();
+    scene.add(ClonPapel2P2);
+    ClonPapel2P2.position.set(24.5,-2,-109);
+    ClonPapel2P2.scale.set(3,2.5,2.5);
+    //-----------------------------------------------------------------------------------------------------PP2_2
+    //-------------------------------------------------------------------------------------------------------------PP_PisoInf1
+
+    //-------------------------------------------------------------------------------------------------------------PP_PisoCentral2
+    //-----------------------------------------------------------------------------------------------------PP2_3
+    var ClonPapel2P3 = PapelPikEscenario2.clone();
+    scene.add(ClonPapel2P3);
+    ClonPapel2P3.position.set(-13,18,-129);
+    ClonPapel2P3.scale.set(2.5,2.5,2.5);
+    //-----------------------------------------------------------------------------------------------------PP2_3
+
+    //-----------------------------------------------------------------------------------------------------PP2_4
+    var ClonPapel2P4 = PapelPikEscenario2.clone();
+    scene.add(ClonPapel2P4);
+    ClonPapel2P4.position.set(50,18,-129);
+    ClonPapel2P4.scale.set(2.5,2.5,2.5);
+    //-----------------------------------------------------------------------------------------------------PP2_4
+
+    //-----------------------------------------------------------------------------------------------------PP2_5
+    var ClonPapel2P5 = PapelPikEscenario2.clone();
+    scene.add(ClonPapel2P5);
+    ClonPapel2P5.position.set(-75,18,-129);
+    ClonPapel2P5.scale.set(2.5,2.5,2.5);
+    //-----------------------------------------------------------------------------------------------------PP2_5
+    //-------------------------------------------------------------------------------------------------------------PP_PisoCentral2
+
+    //-------------------------------------------------------------------------------------------------------------PP_PisoSup3
+    //-----------------------------------------------------------------------------------------------------PP2_6
+    var ClonPapel2P6 = PapelPikEscenario2.clone();
+    scene.add(ClonPapel2P6);
+    ClonPapel2P6.position.set(26,38,-149);
+    ClonPapel2P6.scale.set(3,2.5,2.5);
+    //-----------------------------------------------------------------------------------------------------PP2_6
+
+    //-----------------------------------------------------------------------------------------------------PP2_7
+    var ClonPapel2P7 = PapelPikEscenario2.clone();
+    scene.add(ClonPapel2P7);
+    ClonPapel2P7.position.set(-56,38,-149);
+    ClonPapel2P7.scale.set(3,2.5,2.5);
+    //-----------------------------------------------------------------------------------------------------PP2_7
+    //-------------------------------------------------------------------------------------------------------------PP_PisoSup3
+    //-----------------------------------------------------------------------------------------------------------------------PapelPicado2
+    
+    //-----------------------------------------------------------------------------------------------------------------------Flores-125
+    //-------------------------------------------------------------------------------------------------------------FloresGrup1
+    //-----------------------------------------------------------------------------------------------------Flor1_Izq
+    var ClonFlor1 = FlorestEscenario.clone();
+    scene.add(ClonFlor1);
+    ClonFlor1.position.set(-125,-4,-10);
+    //-----------------------------------------------------------------------------------------------------Flor1_Izq
+
+    //-----------------------------------------------------------------------------------------------------Flor2_Izq
+    var ClonFlor2 = FlorestEscenario.clone();
+    scene.add(ClonFlor2);
+    ClonFlor2.position.set(-125,-4,-2);
+    ClonFlor2.rotation.set(0.3,0,0.2);
+    ClonFlor2.scale.set(1.3,1,1.3);
+    //-----------------------------------------------------------------------------------------------------Flor2_Izq
+
+    //-----------------------------------------------------------------------------------------------------Flor3_Izq
+    var ClonFlor3 = FlorestEscenario.clone();
+    scene.add(ClonFlor3);
+    ClonFlor3.position.set(-125,-4,8);
+    ClonFlor3.rotation.set(-0.3,0,-0.2);
+    //-----------------------------------------------------------------------------------------------------Flor3_Izq
+
+    //-----------------------------------------------------------------------------------------------------Flor4_Izq
+    var ClonFlor4 = FlorestEscenario.clone();
+    scene.add(ClonFlor4);
+    ClonFlor4.position.set(-129,-3,19);
+    ClonFlor4.rotation.set(0.3,0,-0.7);
+    //-----------------------------------------------------------------------------------------------------Flor4_Izq
+
+    //-----------------------------------------------------------------------------------------------------Flor5_Izq
+    var ClonFlor5 = FlorestEscenario.clone();
+    scene.add(ClonFlor5);
+    ClonFlor5.position.set(-122,-3,31);
+    ClonFlor5.rotation.set(0,0,0.5);
+    ClonFlor5.scale.set(1.3,1,1.3);
+    //-----------------------------------------------------------------------------------------------------Flor5_Izq
+
+    //-----------------------------------------------------------------------------------------------------Flor6_Izq
+    var ClonFlor6 = FlorestEscenario.clone();
+    scene.add(ClonFlor6);
+    ClonFlor6.position.set(-122,-3,48);
+    ClonFlor6.rotation.set(0,0,0.5);
+    ClonFlor6.scale.set(1.3,1,1.3);
+    //-----------------------------------------------------------------------------------------------------Flor6_Izq
+
+    //-----------------------------------------------------------------------------------------------------Flor7_Izq
+    var ClonFlor7 = FlorestEscenario.clone();
+    scene.add(ClonFlor7);
+    ClonFlor7.position.set(-129,-3,57);
+    ClonFlor7.rotation.set(0.3,0,-0.7);
+    //-----------------------------------------------------------------------------------------------------Flor7_Izq
+
+    //-----------------------------------------------------------------------------------------------------Flor8_Izq
+    var ClonFlor8 = FlorestEscenario.clone();
+    scene.add(ClonFlor8);
+    ClonFlor8.position.set(-125,-4,75);
+    ClonFlor8.rotation.set(-0.3,0,-0.2);
+    //-----------------------------------------------------------------------------------------------------Flor8_Izq
+
+    //-----------------------------------------------------------------------------------------------------Flor9_Izq
+    var ClonFlor9 = FlorestEscenario.clone();
+    scene.add(ClonFlor9);
+    ClonFlor9.position.set(-125,-4,82);
+    ClonFlor9.rotation.set(0.3,0,0.2);
+    ClonFlor9.scale.set(1.3,1,1.3);
+    //-----------------------------------------------------------------------------------------------------Flor9_Izq
+
+    //-----------------------------------------------------------------------------------------------------Flor10_Izq
+    var ClonFlor10 = FlorestEscenario.clone();
+    scene.add(ClonFlor10);
+    ClonFlor10.position.set(-125,-4,95);
+    //-----------------------------------------------------------------------------------------------------Flor10_Izq
+    //-------------------------------------------------------------------------------------------------------------FloresGrup1
+
+    //-------------------------------------------------------------------------------------------------------------FloresGrup2
+    //-----------------------------------------------------------------------------------------------------Flor1_Der
+    var ClonFlor1D = FlorestEscenario.clone();
+    scene.add(ClonFlor1D);
+    ClonFlor1D.position.set(125,-4,-10);
+    //-----------------------------------------------------------------------------------------------------Flor1_Der
+
+    //-----------------------------------------------------------------------------------------------------Flor2_Der
+    var ClonFlor2D = FlorestEscenario.clone();
+    scene.add(ClonFlor2D);
+    ClonFlor2D.position.set(125,-4,-2);
+    ClonFlor2D.rotation.set(0.3,0,0.2);
+    ClonFlor2D.scale.set(1.3,1,1.3);
+    //-----------------------------------------------------------------------------------------------------Flor2_Der
+
+    //-----------------------------------------------------------------------------------------------------Flor3_Der
+    var ClonFlor3D = FlorestEscenario.clone();
+    scene.add(ClonFlor3D);
+    ClonFlor3D.position.set(125,-4,8);
+    ClonFlor3D.rotation.set(-0.3,0,-0.2);
+    //-----------------------------------------------------------------------------------------------------Flor3_Der
+
+    //-----------------------------------------------------------------------------------------------------Flor4_Der
+    var ClonFlor4D = FlorestEscenario.clone();
+    scene.add(ClonFlor4D);
+    ClonFlor4D.position.set(122,-3,19);
+    ClonFlor4D.rotation.set(0.3,0,-0.7);
+    //-----------------------------------------------------------------------------------------------------Flor4_Der
+
+    //-----------------------------------------------------------------------------------------------------Flor5_Der
+    var ClonFlor5D = FlorestEscenario.clone();
+    scene.add(ClonFlor5D);
+    ClonFlor5D.position.set(127,-3,31);
+    ClonFlor5D.rotation.set(0,0,0.5);
+    ClonFlor5D.scale.set(1.3,1,1.3);
+    //-----------------------------------------------------------------------------------------------------Flor5_Der
+
+    //-----------------------------------------------------------------------------------------------------Flor6_Der
+    var ClonFlor6D = FlorestEscenario.clone();
+    scene.add(ClonFlor6D);
+    ClonFlor6D.position.set(127,-3,48);
+    ClonFlor6D.rotation.set(0,0,0.5);
+    ClonFlor6D.scale.set(1.3,1,1.3);
+    //-----------------------------------------------------------------------------------------------------Flor6_Der
+
+    //-----------------------------------------------------------------------------------------------------Flor7_Der
+    var ClonFlor7D = FlorestEscenario.clone();
+    scene.add(ClonFlor7D);
+    ClonFlor7D.position.set(122,-3,57);
+    ClonFlor7D.rotation.set(0.3,0,-0.7);
+    //-----------------------------------------------------------------------------------------------------Flor7_Der
+
+    //-----------------------------------------------------------------------------------------------------Flor8_Der
+    var ClonFlor8D = FlorestEscenario.clone();
+    scene.add(ClonFlor8D);
+    ClonFlor8D.position.set(125,-4,75);
+    ClonFlor8D.rotation.set(-0.3,0,-0.2);
+    //-----------------------------------------------------------------------------------------------------Flor8_Der
+
+    //-----------------------------------------------------------------------------------------------------Flor9_Der
+    var ClonFlor9D = FlorestEscenario.clone();
+    scene.add(ClonFlor9D);
+    ClonFlor9D.position.set(125,-4,82);
+    ClonFlor9D.rotation.set(0.3,0,0.2);
+    ClonFlor9D.scale.set(1.3,1,1.3);
+    //-----------------------------------------------------------------------------------------------------Flor9_Der
+
+    //-----------------------------------------------------------------------------------------------------Flor10_Der
+    var ClonFlor10D = FlorestEscenario.clone();
+    scene.add(ClonFlor10D);
+    ClonFlor10D.position.set(125,-4,95);
+    //-----------------------------------------------------------------------------------------------------Flor10_Der
+    //-------------------------------------------------------------------------------------------------------------FloresGrup2
+
+    //-------------------------------------------------------------------------------------------------------------FloresGrup3Horizontal
+    //-----------------------------------------------------------------------------------------------------Flor11_Central
+    var ClonFlor11C = FlorestEscenario.clone();
+    scene.add(ClonFlor11C);
+    ClonFlor11C.position.set(-90,-4,146);
+    //-----------------------------------------------------------------------------------------------------Flor11_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor12_Central
+    var ClonFlor12C = FlorestEscenario.clone();
+    scene.add(ClonFlor12C);
+    ClonFlor12C.position.set(-80,-4,146);
+    ClonFlor12C.rotation.set(0.5,0,0.2);
+    //-----------------------------------------------------------------------------------------------------Flor12_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor13_Central
+    var ClonFlor13C = FlorestEscenario.clone();
+    scene.add(ClonFlor13C);
+    ClonFlor13C.position.set(-73,-4,148);
+    ClonFlor13C.rotation.set(-0.5,0.2,-0.2);
+    //-----------------------------------------------------------------------------------------------------Flor13_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor14_Central
+    var ClonFlor14C = FlorestEscenario.clone();
+    scene.add(ClonFlor14C);
+    ClonFlor14C.position.set(-61,-4,146);
+    //-----------------------------------------------------------------------------------------------------Flor14_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor15_Central
+    var ClonFlor15C = FlorestEscenario.clone();
+    scene.add(ClonFlor15C);
+    ClonFlor15C.position.set(-51,-3,141);
+    ClonFlor15C.rotation.set(0.5,0,0.2);
+    //-----------------------------------------------------------------------------------------------------Flor15_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor16_Central
+    var ClonFlor16C = FlorestEscenario.clone();
+    scene.add(ClonFlor16C);
+    ClonFlor16C.position.set(-45,-4,148);
+    ClonFlor16C.rotation.set(-0.5,0.2,-0.2);
+    //-----------------------------------------------------------------------------------------------------Flor16_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor17_Central
+    var ClonFlor17C = FlorestEscenario.clone();
+    scene.add(ClonFlor17C);
+    ClonFlor17C.position.set(-36,-4,146);
+    //-----------------------------------------------------------------------------------------------------Flor17_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor18_Central
+    var ClonFlor18C = FlorestEscenario.clone();
+    scene.add(ClonFlor18C);
+    ClonFlor18C.position.set(-26,-3,141);
+    ClonFlor18C.rotation.set(0.5,0,0.2);
+    //-----------------------------------------------------------------------------------------------------Flor18_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor19_Central
+    var ClonFlor19C = FlorestEscenario.clone();
+    scene.add(ClonFlor19C);
+    ClonFlor19C.position.set(-20,-4,148);
+    ClonFlor19C.rotation.set(-0.5,0.2,-0.2);
+    //-----------------------------------------------------------------------------------------------------Flor19_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor20_Central
+    var ClonFlor20C = FlorestEscenario.clone();
+    scene.add(ClonFlor20C);
+    ClonFlor20C.position.set(-9,-4,146);
+    //-----------------------------------------------------------------------------------------------------Flor20_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor21_Central
+    var ClonFlor21C = FlorestEscenario.clone();
+    scene.add(ClonFlor21C);
+    ClonFlor21C.position.set(0,-3,141);
+    ClonFlor21C.rotation.set(0.5,0,0.2);
+    //-----------------------------------------------------------------------------------------------------Flor21_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor22_Central
+    var ClonFlor22C = FlorestEscenario.clone();
+    scene.add(ClonFlor22C);
+    ClonFlor22C.position.set(6,-4,148);
+    ClonFlor22C.rotation.set(-0.5,0.2,-0.2);
+    //-----------------------------------------------------------------------------------------------------Flor22_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor23_Central
+    var ClonFlor23C = FlorestEscenario.clone();
+    scene.add(ClonFlor23C);
+    ClonFlor23C.position.set(15,-4,146);
+    //-----------------------------------------------------------------------------------------------------Flor23_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor24_Central
+    var ClonFlor24C = FlorestEscenario.clone();
+    scene.add(ClonFlor24C);
+    ClonFlor24C.position.set(22,-3,141);
+    ClonFlor24C.rotation.set(0.5,0,-0.2);
+    //-----------------------------------------------------------------------------------------------------Flor24_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor25_Central
+    var ClonFlor25C = FlorestEscenario.clone();
+    scene.add(ClonFlor25C);
+    ClonFlor25C.position.set(30,-4,148);
+    ClonFlor25C.rotation.set(-0.5,0.2,-0.2);
+    //-----------------------------------------------------------------------------------------------------Flor25_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor26_Central
+    var ClonFlor26C = FlorestEscenario.clone();
+    scene.add(ClonFlor26C);
+    ClonFlor26C.position.set(40,-4,146);
+    //-----------------------------------------------------------------------------------------------------Flor26_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor27_Central
+    var ClonFlor27C = FlorestEscenario.clone();
+    scene.add(ClonFlor27C);
+    ClonFlor27C.position.set(47,-3,141);
+    ClonFlor27C.rotation.set(0.5,0,-0.2);
+    //-----------------------------------------------------------------------------------------------------Flor27_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor28_Central
+    var ClonFlor28C = FlorestEscenario.clone();
+    scene.add(ClonFlor28C);
+    ClonFlor28C.position.set(55,-4,148);
+    ClonFlor28C.rotation.set(-0.5,0.2,-0.2);
+    //-----------------------------------------------------------------------------------------------------Flor28_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor29_Central
+    var ClonFlor29C = FlorestEscenario.clone();
+    scene.add(ClonFlor29C);
+    ClonFlor29C.position.set(65,-4,146);
+    //-----------------------------------------------------------------------------------------------------Flor29_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor30_Central
+    var ClonFlor30C = FlorestEscenario.clone();
+    scene.add(ClonFlor30C);
+    ClonFlor30C.position.set(72,-3,141);
+    ClonFlor30C.rotation.set(0.5,0,-0.2);
+    //-----------------------------------------------------------------------------------------------------Flor30_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor31_Central
+    var ClonFlor31C = FlorestEscenario.clone();
+    scene.add(ClonFlor31C);
+    ClonFlor31C.position.set(80,-4,148);
+    ClonFlor31C.rotation.set(-0.5,0.2,-0.2);
+    //-----------------------------------------------------------------------------------------------------Flor31_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor32_Central
+    var ClonFlor32C = FlorestEscenario.clone();
+    scene.add(ClonFlor32C);
+    ClonFlor32C.position.set(89,-4,148);
+    ClonFlor32C.rotation.set(-0.5,0.2,-0.2);
+    //-----------------------------------------------------------------------------------------------------Flor32_Central
+    //-------------------------------------------------------------------------------------------------------------FloresGrup3Horizontal
+
+    //-------------------------------------------------------------------------------------------------------------FloresCalaveras1
+    //-----------------------------------------------------------------------------------------------------Flor33_Central
+    var ClonFlor33C = FlorestEscenario.clone();
+    scene.add(ClonFlor33C);
+    ClonFlor33C.position.set(125,0,-88);
+    ClonFlor33C.scale.set(2,1.5,2);
+    ClonFlor33C.rotation.set(0.5,0.3,0.7);
+    //-----------------------------------------------------------------------------------------------------Flor33_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor34_Central
+    var ClonFlor34C = FlorestEscenario.clone();
+    scene.add(ClonFlor34C);
+    ClonFlor34C.position.set(100,-1.5,-100);
+    ClonFlor34C.scale.set(1.5,1,1.5);
+    ClonFlor34C.rotation.set(1.2,0,-0.7);
+    //-----------------------------------------------------------------------------------------------------Flor34_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor35_Central
+    var ClonFlor35C = FlorestEscenario.clone();
+    scene.add(ClonFlor35C);
+    ClonFlor35C.position.set(105,-1.5,-94);
+    ClonFlor35C.scale.set(1,1.5,1.5);
+    ClonFlor35C.rotation.set(0.9,0,0);
+    //-----------------------------------------------------------------------------------------------------Flor35_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor36_Central
+    var ClonFlor36C = FlorestEscenario.clone();
+    scene.add(ClonFlor36C);
+    ClonFlor36C.position.set(110,0,-99);
+    ClonFlor36C.scale.set(2,1.5,2);
+    ClonFlor36C.rotation.set(0.5,0.3,-0.7);
+    //-----------------------------------------------------------------------------------------------------Flor36_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor37_Central
+    var ClonFlor37C = FlorestEscenario.clone();
+    scene.add(ClonFlor37C);
+    ClonFlor37C.position.set(100,0,-102);
+    ClonFlor37C.scale.set(2,1.5,2);
+    ClonFlor37C.rotation.set(-0.5,0.3,-0.7);
+    //-----------------------------------------------------------------------------------------------------Flor37_Central
+    //-------------------------------------------------------------------------------------------------------------FloresCalaveras1
+
+    //-------------------------------------------------------------------------------------------------------------FloresCalaveras2
+    //-----------------------------------------------------------------------------------------------------Flor38_Central
+    var ClonFlor38C = FlorestEscenario.clone();
+    scene.add(ClonFlor38C);
+    ClonFlor38C.position.set(-128,0,-85);
+    ClonFlor38C.scale.set(2,1.5,2);
+    ClonFlor38C.rotation.set(0.5,0.3,-0.7);
+    //-----------------------------------------------------------------------------------------------------Flor38_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor39_Central
+    var ClonFlor39C = FlorestEscenario.clone();
+    scene.add(ClonFlor39C);
+    ClonFlor39C.position.set(-105,-1.5,-95);
+    ClonFlor39C.scale.set(1.5,1,1.5);
+    ClonFlor39C.rotation.set(1.2,0,0.7);
+    //-----------------------------------------------------------------------------------------------------Flor39_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor40_Central
+    var ClonFlor40C = FlorestEscenario.clone();
+    scene.add(ClonFlor40C);
+    ClonFlor40C.position.set(-98,-1.5,-94);
+    ClonFlor40C.scale.set(1,1.5,1.5);
+    ClonFlor40C.rotation.set(-0.9,0,0);
+    //-----------------------------------------------------------------------------------------------------Flor40_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor41_Central
+    var ClonFlor41C = FlorestEscenario.clone();
+    scene.add(ClonFlor41C);
+    ClonFlor41C.position.set(-110,0,-99);
+    ClonFlor41C.scale.set(2,1.5,2);
+    ClonFlor41C.rotation.set(0.5,0.3,0.7);
+    //-----------------------------------------------------------------------------------------------------Flor41_Central
+
+    //-----------------------------------------------------------------------------------------------------Flor42_Central
+    var ClonFlor42C = FlorestEscenario.clone();
+    scene.add(ClonFlor42C);
+    ClonFlor42C.position.set(-100,0,-102);
+    ClonFlor42C.scale.set(2,1.5,2);
+    ClonFlor42C.rotation.set(-0.5,0.3,0.7);
+    //-----------------------------------------------------------------------------------------------------Flor42_Central
+    //-------------------------------------------------------------------------------------------------------------FloresCalaveras2
+
+    //-------------------------------------------------------------------------------------------------------------FloresFlorero
+    //-----------------------------------------------------------------------------------------------------Flor43
+    var ClonFlor43C = FlorestEscenario.clone();
+    scene.add(ClonFlor43C);
+    ClonFlor43C.scale.set(2,1,2);
+    ClonFlor43C.position.set(70,65,-160);
+    //-----------------------------------------------------------------------------------------------------Flor43
+
+    //-----------------------------------------------------------------------------------------------------Flor44
+    var ClonFlor44C = FlorestEscenario.clone();
+    scene.add(ClonFlor44C);
+    ClonFlor44C.scale.set(2,1,2);
+    ClonFlor44C.position.set(-70,65,-160);
+    //-----------------------------------------------------------------------------------------------------Flor44
+
+    //-----------------------------------------------------------------------------------------------------Flor45
+    var ClonFlor45C = FlorestEscenario.clone();
+    scene.add(ClonFlor45C);
+    ClonFlor45C.scale.set(2,1,2);
+    ClonFlor45C.position.set(90,45,-175);
+    //-----------------------------------------------------------------------------------------------------Flor45
+
+    //-----------------------------------------------------------------------------------------------------Flor46
+    var ClonFlor46C = FlorestEscenario.clone();
+    scene.add(ClonFlor46C);
+    ClonFlor46C.scale.set(2,1,2);
+    ClonFlor46C.position.set(-90,45,-175);
+    //-----------------------------------------------------------------------------------------------------Flor46
+    //-------------------------------------------------------------------------------------------------------------FloresFlorero
+    //-----------------------------------------------------------------------------------------------------------------------Flores
+
+    //-----------------------------------------------------------------------------------------------------------------------Arboles
+    //-----------------------------------------------------------------------------------------------------Arboles1
+    var ClonArboles1 = ArbolesEscenario.clone();
+    scene.add(ClonArboles1);
+    ClonArboles1.scale.set(50,50,50);
+    ClonArboles1.position.set(-300,-50,-200);
+    ClonArboles1.rotation.set(0,1,0);
+    //-----------------------------------------------------------------------------------------------------Arboles1
+
+    //-----------------------------------------------------------------------------------------------------Arboles2
+    var ClonArboles2 = ArbolesEscenario.clone();
+    scene.add(ClonArboles2);
+    ClonArboles2.scale.set(50,50,50);
+    ClonArboles2.position.set(300,-50,-200);
+    ClonArboles2.rotation.set(0,-1,0);
+    //-----------------------------------------------------------------------------------------------------Arboles2
+
+    //-----------------------------------------------------------------------------------------------------Arboles3
+    var ClonArboles3 = ArbolesEscenario.clone();
+    scene.add(ClonArboles3);
+    ClonArboles3.scale.set(50,50,50);
+    ClonArboles3.position.set(-600,-50,-400);
+    ClonArboles3.rotation.set(0,-1,0);
+    //-----------------------------------------------------------------------------------------------------Arboles3
+
+    //-----------------------------------------------------------------------------------------------------Arboles4
+    var ClonArboles4 = ArbolesEscenario.clone();
+    scene.add(ClonArboles4);
+    ClonArboles4.scale.set(50,50,50);
+    ClonArboles4.position.set(600,-50,-400);
+    ClonArboles4.rotation.set(0,1,0);
+    //-----------------------------------------------------------------------------------------------------Arboles4
+
+    //-----------------------------------------------------------------------------------------------------Arboles5
+    var ClonArboles5 = ArbolesEscenario.clone();
+    scene.add(ClonArboles5);
+    ClonArboles5.scale.set(50,60,50);
+    ClonArboles5.position.set(800,-50,-500);
+    ClonArboles5.rotation.set(0,-1.57,0);
+    //-----------------------------------------------------------------------------------------------------Arboles5
+
+    //-----------------------------------------------------------------------------------------------------Arboles6
+    var ClonArboles6 = ArbolesEscenario.clone();
+    scene.add(ClonArboles6);
+    ClonArboles6.scale.set(50,60,50);
+    ClonArboles6.position.set(-800,-50,-500);
+    ClonArboles6.rotation.set(0,1,0);
+    //-----------------------------------------------------------------------------------------------------Arboles6
+
+    //-----------------------------------------------------------------------------------------------------Arboles7
+    var ClonArboles7 = ArbolesEscenario.clone();
+    scene.add(ClonArboles7);
+    ClonArboles7.scale.set(50,60,50);
+    ClonArboles7.position.set(200,-50,-900);
+    ClonArboles7.rotation.set(0,-2.57,0);
+    //-----------------------------------------------------------------------------------------------------Arboles7
+
+    //-----------------------------------------------------------------------------------------------------Arboles8
+    var ClonArboles8 = ArbolesEscenario.clone();
+    scene.add(ClonArboles8);
+    ClonArboles8.scale.set(50,60,50);
+    ClonArboles8.position.set(-200,-50,-900);
+    ClonArboles8.rotation.set(0,2.57,0);
+    //-----------------------------------------------------------------------------------------------------Arboles8
+
+    //-----------------------------------------------------------------------------------------------------Arboles9
+    var ClonArboles9 = ArbolesEscenario.clone();
+    scene.add(ClonArboles9);
+    ClonArboles9.scale.set(50,40,50);
+    ClonArboles9.position.set(800,-50,100);
+    ClonArboles9.rotation.set(0,0.8,0);
+    //-----------------------------------------------------------------------------------------------------Arboles9
+
+    //-----------------------------------------------------------------------------------------------------Arboles10
+    var ClonArboles10 = ArbolesEscenario.clone();
+    scene.add(ClonArboles10);
+    ClonArboles10.scale.set(50,40,50);
+    ClonArboles10.position.set(-850,-50,90);
+    ClonArboles10.rotation.set(0,-0.8,0);
+    //-----------------------------------------------------------------------------------------------------Arboles10
+
+    //-----------------------------------------------------------------------------------------------------Arboles11
+    var ClonArboles11 = ArbolesEscenario.clone();
+    scene.add(ClonArboles11);
+    ClonArboles11.scale.set(50,35,50);
+    ClonArboles11.position.set(500,-50,300);
+    ClonArboles11.rotation.set(0,0.8,0);
+    //-----------------------------------------------------------------------------------------------------Arboles11
+
+    //-----------------------------------------------------------------------------------------------------Arboles12
+    var ClonArboles12 = ArbolesEscenario.clone();
+    scene.add(ClonArboles12);
+    ClonArboles12.scale.set(50,35,50);
+    ClonArboles12.position.set(-500,-50,290);
+    ClonArboles12.rotation.set(0,-0.8,0);
+    //-----------------------------------------------------------------------------------------------------Arboles12
+    //-----------------------------------------------------------------------------------------------------------------------Arboles
+
+    //--------------------------------------------------------------------------------------------------------------------------------Clones
+
+//🎰🎰Rendering y animación
+    requestAnimationFrame(render);
+    function render() {
+
+    //🪄🪄 Animación - 
+
+    TextoEscenario.rotation.x +=0.1;
+
+    //🎮🎮Actualización del OrbitControls para generar la suavidad de movimiento
+    controls.update();
+
+    //Llamado para renderizar y volver a llamar a la misma función (render)
+    renderer.render(scene, camera);
+    requestAnimationFrame(render);
+    }
+</script>
+</body>
+</html>

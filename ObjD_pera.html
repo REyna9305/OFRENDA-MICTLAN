@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Pera con Lambert, grupo y clon</title>
+</head>
+<body>
+  <canvas id="myCanvas"></canvas>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./js/three.module.js",
+        "three/OrbitControls": "./js/OrbitControls.js"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/OrbitControls';
+
+    //  Renderizador
+    var renderer = new THREE.WebGLRenderer({
+      canvas: document.getElementById('myCanvas'),
+      antialias: true
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x27CFF5);
+
+    //  Escena y cámara
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 2000);
+    camera.position.set(40, 40, 60);
+    scene.add(camera);
+
+    //  Controles orbitales
+    var controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+
+    //  Luz
+    var light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(50, 80, 50);
+    scene.add(light);
+
+    //  Piso
+    var pisoGeo = new THREE.BoxGeometry(200, 0.5, 200);
+    var pisoMat = new THREE.MeshLambertMaterial({ color: 0x00fff1 });
+    var piso = new THREE.Mesh(pisoGeo, pisoMat);
+    scene.add(piso);
+
+    //  Material de la pera
+    var matPera = new THREE.MeshLambertMaterial({ color: 0x9ACD32 });
+
+    //  Geometrías de pera
+    var geoInf = new THREE.SphereGeometry(6, 32, 32);
+    var geoSup = new THREE.SphereGeometry(4, 32, 32);
+
+    //  Mallas de la pera
+    var peraInf = new THREE.Mesh(geoInf, matPera);
+    peraInf.position.y = 6;
+
+    var peraSup = new THREE.Mesh(geoSup, matPera);
+    peraSup.position.y = 11;
+
+    //  Agrupar las partes en una sola pera
+    var pera = new THREE.Group();
+    pera.add(peraInf,peraSup);
+
+    //  Añadir al escenario
+      //scene.add(pera);
+
+    //  Clonar la pera
+    var peraClon = pera.clone();
+    peraClon.position.set(15, 8, 2); // moverla un poco al lado
+    peraClon.rotation.set(1.57,0.5,1);
+      //scene.add(peraClon);
+
+    //  Agrupar las partes en una sola peraCompleta
+    var PeraGrup = new THREE.Group();
+    PeraGrup.add(pera,peraClon);
+    scene.add(PeraGrup);
+
+    animate();
+    function animate() {
+      controls.update();
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+    
+  </script>
+</body>
+</html>

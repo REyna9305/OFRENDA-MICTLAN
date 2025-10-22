@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Manzana</title>
+</head>
+<body>
+  <canvas id="myCanvas"></canvas>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./js/three.module.js",
+        "three/OrbitControls": "./js/OrbitControls.js"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/OrbitControls';
+
+    var renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('myCanvas'), antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x27CFF5);
+
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 2000);
+    camera.position.set(40, 40, 60);
+    scene.add(camera);
+
+    var controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+
+    var light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(50, 80, 50);
+    scene.add(light);
+
+    var piso = new THREE.Mesh(
+      new THREE.BoxGeometry(200, 0.5, 200),
+      new THREE.MeshLambertMaterial({ color: 0x00fff1 })
+    );
+    scene.add(piso);
+
+    var manzana = new THREE.Mesh(
+      new THREE.SphereGeometry(6, 32, 32),
+      new THREE.MeshLambertMaterial({ color: 0xE30B17 })
+    );
+    manzana.position.y = 6;
+    scene.add(manzana);
+
+    var tallo = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.5, 0.5, 3, 12),
+      new THREE.MeshLambertMaterial({ color: 0x4B2E05 })
+    );
+    tallo.position.set(0, 11, 0);
+    scene.add(tallo);
+
+    animate();
+    function animate() {
+      controls.update();
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+  </script>
+</body>
+</html>

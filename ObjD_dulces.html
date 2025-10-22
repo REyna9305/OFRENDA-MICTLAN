@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dulces Tradicionales 3D</title>
+</head>
+<body>
+    <canvas id="myCanvas"></canvas>
+
+<script type="importmap"> 
+    {
+        "imports":{
+            "three": "./js/three.module.js",
+            "three/OrbitControls": "./js/OrbitControls.js" 
+        }
+}
+</script>
+
+<script type="module"> 
+import * as THREE from 'three'; 
+import {OrbitControls} from 'three/OrbitControls';
+
+//🕹️ Renderer
+var renderer = new THREE.WebGLRenderer({
+    canvas: document.getElementById('myCanvas'), antialias: true,
+});
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setClearColor(0x27CFF5);
+
+//  Escena
+var scene = new THREE.Scene();
+
+// Cámara
+var camera = new THREE.PerspectiveCamera(70,window.innerWidth / window.innerHeight,0.1,2000);
+scene.add(camera);
+camera.position.set(0, 5, 18);
+
+// Controles
+var controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+
+// Luces
+var light1 = new THREE.DirectionalLight(0xFFFFFF, 0.8);
+light1.position.set(50,50,50);
+scene.add(light1);
+scene.add(new THREE.AmbientLight(0xFFFFFF, 0.4));
+
+// Piso
+var geometry01 = new THREE.BoxGeometry(500, 0.5, 500);
+var material01 = new THREE.MeshLambertMaterial({ color:0x00fff1, side: THREE.DoubleSide });
+var mesh01 = new THREE.Mesh(geometry01,material01);
+mesh01.position.set(0,0,0,2);
+scene.add(mesh01);
+
+
+//  DULCES 
+
+// ALEGRÍA DE AMARANTO
+var alegriaGeo = new THREE.CylinderGeometry(1.5, 1.5, 0.5, 32);
+var alegriaMat = new THREE.MeshLambertMaterial({ color: 0xE1B16A });
+var alegria = new THREE.Mesh(alegriaGeo, alegriaMat);
+alegria.position.set(-6, 1, -3);
+scene.add(alegria);
+
+// Centro de miel
+var centroGeo = new THREE.CylinderGeometry(0.6, 0.6, 0.55, 32);
+var centroMat = new THREE.MeshLambertMaterial({ color: 0xD9923B });
+var centro = new THREE.Mesh(centroGeo, centroMat);
+centro.position.set(-6, 1.02, -3);
+scene.add(centro);
+
+
+//  GLOBO DE TAMARINDO
+var tamarindoGeo = new THREE.SphereGeometry(1.2, 20, 20);
+var tamarindoMat = new THREE.MeshLambertMaterial({ color: 0x7B2D0F });
+var tamarindo = new THREE.Mesh(tamarindoGeo, tamarindoMat);
+tamarindo.position.set(-2, 1.3, -2);
+scene.add(tamarindo);
+
+
+// MAZAPÁN
+var mazapanGeo = new THREE.CylinderGeometry(1.8, 1.8, 0.4, 32);
+var mazapanMat = new THREE.MeshLambertMaterial({ color: 0xEECDA3 });
+var mazapan = new THREE.Mesh(mazapanGeo, mazapanMat);
+mazapan.position.set(2, 1, -3);
+scene.add(mazapan);
+
+
+//  PALETA PAYASO
+var paletaGeo = new THREE.SphereGeometry(1, 32, 32);
+var paletaMat = new THREE.MeshLambertMaterial({ color: 0x0000FF });
+var paleta = new THREE.Mesh(paletaGeo, paletaMat);
+paleta.position.set(-2, 1.5, 4);
+scene.add(paleta);
+
+// Cara simple
+var ojoGeo = new THREE.SphereGeometry(0.1, 16, 16);
+var ojoMat = new THREE.MeshLambertMaterial({ color: 0xFFFFFF });
+var ojo1 = new THREE.Mesh(ojoGeo, ojoMat);
+var ojo2 = ojo1.clone();
+ojo1.position.set(-2.2, 1.8, 3.1);
+ojo2.position.set(-1.8, 1.8, 3.1);
+scene.add(ojo1);
+scene.add(ojo2);
+
+var narizGeo = new THREE.SphereGeometry(0.15, 16, 16);
+var narizMat = new THREE.MeshLambertMaterial({ color: 0xFF0000 });
+var nariz = new THREE.Mesh(narizGeo, narizMat);
+nariz.position.set(-2, 1.5, 3.1);
+scene.add(nariz);
+
+// Palito
+var paloGeo = new THREE.CylinderGeometry(0.1, 0.1, 2, 16);
+var paloMat = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
+var palo = new THREE.Mesh(paloGeo, paloMat);
+palo.position.set(-2, 0, 4);
+scene.add(palo);
+
+
+// CAJETA EN ROLLO
+var cajetaGeo = new THREE.TorusGeometry(1.5, 0.4, 16, 100);
+var cajetaMat = new THREE.MeshLambertMaterial({ color: 0xA0522D });
+var cajeta = new THREE.Mesh(cajetaGeo, cajetaMat);
+cajeta.rotation.x = Math.PI / 2;
+cajeta.position.set(6, 1, 2);
+scene.add(cajeta);
+
+// Centro claro
+var centroCajetaGeo = new THREE.TorusGeometry(0.9, 0.2, 16, 100);
+var centroCajetaMat = new THREE.MeshLambertMaterial({ color: 0xD2B48C });
+var centroCajeta = new THREE.Mesh(centroCajetaGeo, centroCajetaMat);
+centroCajeta.rotation.x = Math.PI / 2;
+centroCajeta.position.set(6, 1.02, 2);
+scene.add(centroCajeta);
+
+
+//  CLONES para variedad
+var cloneAlegria = alegria.clone();
+cloneAlegria.position.set(-8, 1, 2);
+scene.add(cloneAlegria);
+
+var cloneTamarindo = tamarindo.clone();
+cloneTamarindo.position.set(4, 1.3, 3);
+scene.add(cloneTamarindo);
+
+
+// 🎰 Renderizado
+requestAnimationFrame(render);
+function render() {
+    controls.update();
+    renderer.render(scene, camera);
+    requestAnimationFrame(render);
+}
+</script>
+</body>
+</html>

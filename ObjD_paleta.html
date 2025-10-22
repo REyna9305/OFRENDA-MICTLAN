@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pan de Muerto - Three.js</title>
+  <style>
+    body { margin: 0; background: #222; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas"></canvas>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/OrbitControls": "https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import * as THREE from "three";
+    import { OrbitControls } from "three/OrbitControls";
+// Escena, cámara y render
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    var renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("myCanvas") });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    //  MALLA BLANCA 
+    var grid = new THREE.GridHelper(30, 30, 0xffffff, 0xffffff);
+    scene.add(grid);
+
+
+    // === PIEZA 1: PALITO DE LA PALETA ===
+var palito = new THREE.Mesh(
+  new THREE.CylinderGeometry(0.1, 0.1, 3, 16), // radio sup, radio inf, altura, segmentos
+  new THREE.MeshBasicMaterial({ color: 0xffffff }) // color blanco
+);
+palito.position.y = 1.5; // mitad de la altura del palito
+scene.add(palito);
+
+// === PIEZA 2: DULCE DE LA PALETA ===
+var dulce = new THREE.Mesh(
+  new THREE.SphereGeometry(0.7, 32, 32), // radio y segmentos
+  new THREE.MeshBasicMaterial({ color: 0xff0000 }) // rojo brillante
+);
+dulce.position.y = 3; // encima del palito
+scene.add(dulce);
+
+
+
+
+
+     // === Cámara y control ===
+    camera.position.set(6, 5, 6);
+    var controls = new OrbitControls(camera, renderer.domElement);
+    controls.target.set(0, 2, 0);
+    controls.update();
+
+    // === Animación ===
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>

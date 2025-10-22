@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Práctica 01</title>
+</head>
+<body>
+   
+<canvas id="myCanvas">
+    <!--El elemento HTML canvas se puede utilizar para dibujar gráficos a través de
+        secuencias de comandos (por lo general JavaScript ).-->
+</canvas>
+ 
+<!-- Aquí va todo el código de three.js -->
+<!-- script type="importmap" importa las librerías necesarias para three.js-->
+<script type="importmap">
+    {
+        "imports":{
+            "three": "./js/three.module.js",
+            "three/OrbitControls": "./js/OrbitControls.js"
+        }
+}
+</script>
+<script type="module">
+//🗃️🗃️ Mandar llamar a la librería
+    import * as THREE from 'three';
+    import {OrbitControls} from 'three/OrbitControls';
+    console.log(OrbitControls);
+     import {RoundedBoxGeometry} from "./js/RoundedBoxGeometry.js"
+  
+//🕹️🕹️ Renderer - Realiza una conexión entre el código y el canvas
+    var renderer = new THREE.WebGLRenderer({
+    canvas: document.getElementById('myCanvas'), antialias: true,
+    });
+    renderer.setPixelRatio(window.decivePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0xFFFFFF);
+ 
+ 
+// 🎬 Creando nueva escena - Es el espacio donde se colocan los objetos
+    var scene = new THREE.Scene();
+ 
+//🎥🎥 Agregar una cámara de perspectiva
+    var camera = new THREE.PerspectiveCamera(70,window.innerWidth / window.innerHeight,0.1,2000
+      );
+    scene.add(camera);
+ 
+    //Settings de la cámara
+    camera.position.set(0, 4, 10);
+ 
+    // Añadiendo los OrbitControls
+    var controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+ 
+    var gridHelper = new THREE.GridHelper(50,50,);
+    scene.add (gridHelper);
+ 
+    var gridHelper = new THREE.PolarGridHelper(20,16,20,64);
+    //scene. add (gridHelper);
+ 
+    var gridHelper = new THREE.AxesHelper(500);
+    scene. add (gridHelper);
+    //luces
+ var light1= new THREE.DirectionalLight(0xFFFFFF,0.8);
+ light1.position.set(50,50,50);
+ scene.add(light1);
+// Dibujos 2D
+var geometry01 = new THREE.BoxGeometry (100,0.5,100);
+var material01 = new THREE.MeshLambertMaterial({
+    color:0xff20, side: THREE.DoubleSide
+});
+var mesh01 = new THREE.Mesh(geometry01,material01);
+scene.add(mesh01);
+mesh01.position.set(0,0,0,2);
+ 
+var geometry02 = new RoundedBoxGeometry (1.5,10,1.5,8,2);
+var material02 = new THREE.MeshLambertMaterial({
+    color:0xFF8400, side: THREE.DoubleSide
+});
+var mesh02 = new THREE.Mesh(geometry02,material02);
+//scene.add(mesh02);
+mesh02.position.set(0,0,0);
+
+var mesh03 = new THREE.Mesh(geometry02,material02);
+//scene.add(mesh03);
+mesh03.rotation.set(0,0,0.785);
+ 
+var mesh04 = new THREE.Mesh(geometry02,material02);
+//scene.add(mesh04);
+mesh04.rotation.set(0,0,1.57);
+
+var mesh05 = new THREE.Mesh(geometry02,material02);
+//scene.add(mesh05);
+mesh05.rotation.set(0,0,2.355);
+ 
+//grupos1
+var flor1 = new THREE.Group();
+flor1.add(mesh02,mesh03,mesh04,mesh05);
+    //scene.add(flor1);
+flor1.position.set(0,6,0)
+
+var flor2 = flor1.clone();
+    //scene.add(flor2);
+flor2.rotation.set(0,0,9);
+flor2.position.set(0,6.0);
+
+//grupo2
+var flor3 = flor1.clone();
+    //scene.add(flor3);
+flor3.rotation.set(0,11,9);
+flor3.position.set(0,6,0);
+
+
+var flor4 = flor1.clone();
+    //scene.add(flor4);
+flor4.rotation.set(0,11,3.9);
+flor4.position.set(0,6.0);
+
+//grupo3
+var flor5 = flor1.clone();
+    //scene.add(flor5);
+flor5.rotation.set(0,7,9);
+flor5.position.set(0,6,0);
+
+
+var flor6 = flor1.clone();
+    //scene.add(flor6);
+flor6.rotation.set(0,7,3.9);
+flor6.position.set(0,6.0);
+
+//grupo3
+var flor7 = flor1.clone();
+    //scene.add(flor7);
+flor7.rotation.set(0,-7,9);
+flor7.position.set(0,6,0);
+
+
+var flor8 = flor1.clone();
+    //scene.add(flor8);
+flor8.rotation.set(0,-7,3.9);
+flor8.position.set(0,6.0);
+
+//FlorGrup
+    var FloresGrup = new THREE.Group();
+    FloresGrup.add(flor1,flor2,flor3,flor4,flor5,flor6,flor7,flor8);
+    scene.add(FloresGrup);
+
+//🎰🎰Rendering y animación
+    requestAnimationFrame(render);
+    function render() {
+ 
+    //🪄🪄 Animación -
+
+ 
+    //🎮🎮Actualización del OrbitControls para generar la suavidad de movimiento
+    controls.update();
+ 
+    //Llamado para renderizar y volver a llamar a la misma función (render)
+    renderer.render(scene, camera);
+    requestAnimationFrame(render);
+    }
+</script>
+</body>
+</html>
+ 
+ 

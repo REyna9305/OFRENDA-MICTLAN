@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Caballito de Tequila</title>
+</head>
+<body>
+  <canvas id="myCanvas"></canvas>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./js/three.module.js",
+        "three/OrbitControls": "./js/OrbitControls.js"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/OrbitControls';
+
+    var renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('myCanvas'), antialias: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x27CFF5);
+
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 2000);
+    camera.position.set(40, 40, 60);
+    scene.add(camera);
+
+    var controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+
+    var light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(50, 80, 50);
+    scene.add(light);
+
+    // Piso
+    var piso = new THREE.Mesh(
+      new THREE.BoxGeometry(200, 0.5, 200),
+      new THREE.MeshLambertMaterial({ color: 0x00fff1 })
+    );
+    piso.position.set(0, 0, 0);
+    scene.add(piso);
+
+    // Caballito
+    var vaso = new THREE.Mesh(
+      new THREE.CylinderGeometry(4, 4.5, 12, 32, 1, true),
+      new THREE.MeshLambertMaterial({ color: 0xffffff, opacity: 0.6, transparent: true })
+    );
+    vaso.position.set(0, 6, 0);
+    scene.add(vaso);
+
+    var tequila = new THREE.Mesh(
+      new THREE.CylinderGeometry(3.8, 4.3, 8, 32),
+      new THREE.MeshLambertMaterial({ color: 0xF4C542 })
+    );
+    tequila.position.set(0, 4, 0);
+    scene.add(tequila);
+
+    var base = new THREE.Mesh(
+      new THREE.CylinderGeometry(5, 5, 1, 32),
+      new THREE.MeshLambertMaterial({ color: 0x8B4513 })
+    );
+    base.position.set(0, 0.5, 0);
+    scene.add(base);
+
+    animate();
+    function animate() {
+      controls.update();
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pan de Muerto - Three.js</title>
+  <style>
+    body { margin: 0; background: #222; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas"></canvas>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/OrbitControls": "https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import * as THREE from "three";
+    import { OrbitControls } from "three/OrbitControls";
+// Escena, cámara y render
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    var renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("myCanvas") });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    //  MALLA BLANCA 
+    var grid = new THREE.GridHelper(30, 30, 0xffffff, 0xffffff);
+    scene.add(grid);
+
+
+  //PALITO DE CAÑA
+    var caña = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.5, 0.5, 5, 15), // radio superior, radio inferior, altura, segmentos
+    new THREE.MeshBasicMaterial({ color: 0x8B4513 }) // color café madera
+    );
+    caña.position.set(0, 3, 0); // 3 = mitad de la altura para que toque el piso
+    //scene.add(caña);
+
+    //CañaGrup
+    var CañaGrup = new THREE.Group();
+    CañaGrup.add(caña);
+    scene.add(CañaGrup);
+
+
+
+
+
+     // === Cámara y control ===
+    camera.position.set(6, 5, 6);
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.target.set(0, 2, 0);
+    controls.update();
+
+    // === Animación ===
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>
