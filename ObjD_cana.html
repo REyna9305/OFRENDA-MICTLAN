@@ -35,17 +35,17 @@
 
 
   //PALITO DE CAÑA
-    var caña = new THREE.Mesh(
+    var cana = new THREE.Mesh(
     new THREE.CylinderGeometry(0.5, 0.5, 5, 15), // radio superior, radio inferior, altura, segmentos
     new THREE.MeshBasicMaterial({ color: 0x8B4513 }) // color café madera
     );
-    caña.position.set(0, 3, 0); // 3 = mitad de la altura para que toque el piso
+    cana.position.set(0, 3, 0); // 3 = mitad de la altura para que toque el piso
     //scene.add(caña);
 
     //CañaGrup
-    var CañaGrup = new THREE.Group();
-    CañaGrup.add(caña);
-    scene.add(CañaGrup);
+    var CanaGrup = new THREE.Group();
+    CanaGrup.add(cana);
+    scene.add(CanaGrup);
 
 
 
@@ -66,3 +66,4 @@
   </script>
 </body>
 </html>
+
